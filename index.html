@@ -1,0 +1,2024 @@
+<!DOCTYPE html>
+<html lang="el">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Άλγεβρα Α' Λυκείου - Ηλεκτρονική Τάξη</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #1a237e;
+            --secondary-color: #0d47a1;
+            --text-color: #333;
+            --bg-color: #fff;
+            --section-bg: #fff;
+            --card-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            --hover-bg: rgba(26,35,126,0.1);
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            transition: all 0.3s ease;
+        }
+
+        .login-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(255, 255, 255, 0.95);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+
+        .login-form {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0,0,0,0.1);
+            width: 300px;
+            animation: fadeIn 0.5s ease-out;
+        }
+
+        .login-form h2 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+        .login-form input {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
+
+        .login-form button {
+            width: 100%;
+            padding: 12px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .login-form button:hover {
+            background-color: #45a049;
+        }
+
+        .remember-me {
+            display: flex;
+            align-items: center;
+            margin: 10px 0;
+        }
+
+        .remember-me input {
+            width: auto;
+            margin-right: 10px;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+            display: none; /* Αρχικά κρυμμένο */
+        }
+
+        header {
+            text-align: center;
+            padding: 20px;
+            background-color: #f0f0f0;
+            margin-bottom: 20px;
+            border-radius: 10px;
+            animation: fadeIn 1s ease-out;
+        }
+
+        .section {
+            margin-bottom: 30px;
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            background-color: var(--section-bg);
+            box-shadow: var(--card-shadow);
+            border: none;
+            border-radius: 10px;
+            margin-bottom: 30px;
+            transform: translateY(0);
+            transition: all 0.3s ease;
+            animation: fadeInUp 0.5s ease forwards;
+        }
+
+        .section:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 15px rgba(0,0,0,0.2);
+        }
+
+        .calendar {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 5px;
+            margin-top: 10px;
+        }
+        .calendar-day {
+            padding: 10px;
+            border: 1px solid #ddd;
+            text-align: center;
+        }
+        .lesson-materials {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+        .material-card {
+            background: var(--section-bg);
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: var(--card-shadow);
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+        .material-card img {
+            max-width: 100%;
+            height: auto;
+            margin-bottom: 10px;
+        }
+        .material-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 15px rgba(0,0,0,0.2);
+        }
+        .contact-form {
+            display: grid;
+            gap: 15px;
+        }
+        .contact-form input,
+        .contact-form textarea {
+            background: var(--bg-color);
+            color: var(--text-color);
+            border: 1px solid var(--primary-color);
+            padding: 12px;
+            border-radius: 5px;
+            margin-bottom: 15px;
+            transition: all 0.3s ease;
+        }
+        .contact-form input:focus,
+        .contact-form textarea:focus {
+            border-color: var(--secondary-color);
+            box-shadow: 0 0 0 2px rgba(26,35,126,0.2);
+        }
+        .contact-form button {
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .admin-controls {
+            display: none; /* Κρυμμένο by default */
+            background: #f8f9fa;
+            padding: 10px;
+            border-radius: 5px;
+            margin-bottom: 10px;
+        }
+
+        .calendar-event {
+            background-color: #e3f2fd;
+            margin: 2px;
+            padding: 2px;
+            font-size: 0.8em;
+            border-radius: 3px;
+        }
+
+        .add-event-form {
+            display: none;
+            margin-top: 10px;
+            padding: 10px;
+            background: #fff;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+
+        .calendar-day.has-event {
+            background-color: #e3f2fd;
+            cursor: pointer;
+        }
+
+        .event-delete-btn {
+            color: red;
+            cursor: pointer;
+            margin-left: 5px;
+            font-size: 0.8em;
+        }
+
+        .lesson-schedule {
+            background: var(--section-bg);
+            padding: 20px;
+            border-radius: 10px;
+        }
+
+        .lesson-item {
+            background-color: #f8f9fa;
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 5px;
+            border-left: 4px solid #4CAF50;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .add-lesson-form {
+            display: none;
+            background: #fff;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            margin-top: 10px;
+        }
+
+        .add-lesson-form select,
+        .add-lesson-form input {
+            width: 100%;
+            padding: 8px;
+            margin: 5px 0;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+
+        .add-button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .cancel-button {
+            background-color: #f44336;
+            color: white;
+        }
+
+        .delete-lesson {
+            color: #f44336;
+            cursor: pointer;
+            padding: 5px 10px;
+        }
+
+        .syllabus .chapter {
+            margin-bottom: 25px;
+        }
+
+        .syllabus h3 {
+            color: #2c3e50;
+            margin-bottom: 10px;
+            padding-bottom: 5px;
+            border-bottom: 2px solid #eee;
+        }
+
+        .syllabus ul {
+            list-style-type: none;
+            padding-left: 20px;
+        }
+
+        .syllabus li {
+            margin: 8px 0;
+            position: relative;
+            padding-left: 15px;
+        }
+
+        .syllabus li:before {
+            content: "•";
+            color: #4CAF50;
+            position: absolute;
+            left: -5px;
+        }
+
+        .syllabus .note {
+            color: #666;
+            font-size: 0.9em;
+            font-style: italic;
+        }
+
+        .announcements {
+            background-color: #fff;
+        }
+
+        .announcement-item {
+            background: var(--section-bg);
+            border-left: 4px solid var(--primary-color);
+            padding: 20px;
+            margin: 15px 0;
+            border-radius: 10px;
+            box-shadow: var(--card-shadow);
+            transition: all 0.3s ease;
+        }
+
+        .announcement-item:hover {
+            transform: translateX(5px);
+        }
+
+        .announcement-title {
+            font-weight: bold;
+            color: #2c3e50;
+            margin-bottom: 5px;
+        }
+
+        .announcement-date {
+            font-size: 0.8em;
+            color: #666;
+            margin-bottom: 10px;
+        }
+
+        .add-announcement-form {
+            display: none;
+            margin-top: 10px;
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 4px;
+        }
+
+        .add-announcement-form input,
+        .add-announcement-form textarea {
+            width: 100%;
+            margin-bottom: 10px;
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+
+        .add-announcement-form textarea {
+            min-height: 100px;
+        }
+
+        .no-announcements {
+            color: #666;
+            font-style: italic;
+        }
+
+        .main-header {
+            background: linear-gradient(135deg, #1a237e 0%, #0d47a1 100%);
+            color: white;
+            padding: 40px 0;
+            text-align: center;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        .header-content h1 {
+            font-size: 2.5em;
+            margin: 0;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .header-content p {
+            font-size: 1.2em;
+            margin: 10px 0 0;
+            opacity: 0.9;
+        }
+
+        .divider {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 15px 0;
+        }
+
+        .divider-line {
+            height: 2px;
+            width: 100px;
+            background: rgba(255,255,255,0.5);
+            margin: 0 15px;
+        }
+
+        .divider i {
+            font-size: 1.5em;
+            color: rgba(255,255,255,0.8);
+        }
+
+        .main-nav {
+            position: fixed;
+            top: 0;
+            right: 0;
+            z-index: 1000;
+            padding: 0;
+            width: auto; /* Αντί για 100% */
+        }
+
+        .main-nav ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+        }
+
+        .main-nav a {
+            text-decoration: none;
+            color: #333;
+            font-weight: 500;
+            padding: 5px 10px;
+            border-radius: 4px;
+            transition: all 0.3s ease;
+        }
+
+        .main-nav a:hover {
+            color: #1a237e;
+            background: rgba(26,35,126,0.1);
+        }
+
+        .main-footer {
+            background: #1a237e;
+            color: white;
+            padding: 20px 0;
+            margin-top: 50px;
+            text-align: center;
+        }
+
+        .footer-content {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .footer-content p {
+            margin: 0;
+            font-size: 0.9em;
+        }
+
+        .footer-content i {
+            margin-right: 5px;
+        }
+
+        /* Προσθήκη smooth scroll */
+        html {
+            scroll-behavior: smooth;
+        }
+
+        /* Responsive design για το μενού */
+        @media (max-width: 768px) {
+            .main-nav ul {
+                flex-direction: column;
+                align-items: center;
+                gap: 15px;
+            }
+
+            .header-content h1 {
+                font-size: 2em;
+            }
+        }
+
+        .theme-toggle {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+        }
+
+        .theme-toggle button {
+            background: transparent;
+            border: none;
+            cursor: pointer;
+            font-size: 1.5em;
+            padding: 10px;
+            border-radius: 50%;
+            transition: all 0.3s ease;
+        }
+
+        /* Light mode (default) */
+        .theme-toggle button {
+            color: #000;  /* Μαύρο εικονίδιο στο light mode */
+        }
+
+        /* Dark mode */
+        [data-theme="dark"] .theme-toggle button {
+            color: #fff;  /* Άσπρο εικονίδιο στο dark mode */
+        }
+
+        /* Όταν το κουμπί είναι στην header (που έχει σκούρο φόντο) */
+        .main-header .theme-toggle button {
+            color: #fff;  /* Πάντα άσπρο στην header */
+        }
+
+        .theme-toggle button:hover {
+            background: rgba(255,255,255,0.2);
+        }
+
+        [data-theme="dark"] .fa-moon {
+            display: none;
+        }
+
+        [data-theme="light"] .fa-sun {
+            display: none;
+        }
+
+        .material-card {
+            background: var(--section-bg);
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: var(--card-shadow);
+            transition: all 0.3s ease;
+        }
+
+        .material-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 15px rgba(0,0,0,0.2);
+        }
+
+        .button {
+            background: var(--primary-color);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 5px;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .button:hover {
+            background: var(--secondary-color);
+            transform: translateY(-2px);
+        }
+
+        .announcement-item {
+            background: var(--section-bg);
+            border-left: 4px solid var(--primary-color);
+            padding: 20px;
+            margin: 15px 0;
+            border-radius: 10px;
+            box-shadow: var(--card-shadow);
+            transition: all 0.3s ease;
+        }
+
+        .announcement-item:hover {
+            transform: translateX(5px);
+        }
+
+        .lesson-schedule {
+            background: var(--section-bg);
+            padding: 20px;
+            border-radius: 10px;
+        }
+
+        .contact-form input,
+        .contact-form textarea {
+            background: var(--bg-color);
+            color: var(--text-color);
+            border: 1px solid var(--primary-color);
+            padding: 12px;
+            border-radius: 5px;
+            margin-bottom: 15px;
+            transition: all 0.3s ease;
+        }
+
+        .contact-form input:focus,
+        .contact-form textarea:focus {
+            border-color: var(--secondary-color);
+            box-shadow: 0 0 0 2px rgba(26,35,126,0.2);
+        }
+
+        /* Προσθήκη animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .section {
+            animation: fadeInUp 0.5s ease forwards;
+        }
+
+        .section:nth-child(2) { animation-delay: 0.1s; }
+        .section:nth-child(3) { animation-delay: 0.2s; }
+        .section:nth-child(4) { animation-delay: 0.3s; }
+
+        .contact-info {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            padding: 30px;
+            background: var(--section-bg);
+            border-radius: 10px;
+            max-width: 500px;
+            margin: 0 auto;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            padding: 15px;
+            background: var(--bg-color);
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+
+        .contact-item:hover {
+            transform: translateX(10px);
+            box-shadow: var(--card-shadow);
+        }
+
+        .contact-item i {
+            font-size: 24px;
+            color: var(--primary-color);
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--hover-bg);
+            border-radius: 50%;
+        }
+
+        .contact-item a {
+            color: var(--text-color);
+            text-decoration: none;
+            font-size: 1.1em;
+            transition: color 0.3s ease;
+        }
+
+        .contact-item a:hover {
+            color: var(--primary-color);
+        }
+
+        /* Ειδικό χρώμα για το Instagram icon */
+        .contact-item .fa-instagram {
+            background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .mobile-menu-toggle {
+            display: block;
+            text-align: right;
+            padding: 15px;
+            cursor: pointer;
+            color: var(--text-color);
+            font-size: 1.5em;
+            background: var(--bg-color);
+            border-radius: 0 0 0 8px;
+            box-shadow: var(--card-shadow);
+            margin: 10px;
+        }
+
+        .nav-links {
+            display: none;
+            position: absolute;
+            top: 100%;
+            right: 10px; /* Στοίχιση με το toggle button */
+            background: var(--bg-color);
+            box-shadow: var(--card-shadow);
+            padding: 20px;
+            flex-direction: column;
+            gap: 15px;
+            border-radius: 8px;
+            min-width: 200px;
+            pointer-events: none; /* Απενεργοποίηση κλικ όταν είναι κρυμμένο */
+        }
+
+        .nav-links.active {
+            display: flex;
+            pointer-events: auto; /* Ενεργοποίηση κλικ όταν είναι ορατό */
+        }
+
+        .nav-links li {
+            width: 100%;
+            text-align: center;
+        }
+
+        .nav-links a {
+            display: block;
+            padding: 10px;
+            color: var(--text-color);
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            background: var(--hover-bg);
+            color: var(--primary-color);
+        }
+
+        /* Animation για το menu */
+        .nav-links {
+            transform: translateY(-10px);
+            opacity: 0;
+            transition: all 0.3s ease;
+        }
+
+        .nav-links.active {
+            transform: translateY(0);
+            opacity: 1;
+        }
+
+        .announcement-form {
+            background: var(--section-bg);
+            padding: 20px;
+            border-radius: 8px;
+            margin-top: 15px;
+            box-shadow: var(--card-shadow);
+        }
+
+        .announcement-form input,
+        .announcement-form textarea {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 15px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 1em;
+        }
+
+        .announcement-form textarea {
+            min-height: 120px;
+            resize: vertical;
+        }
+
+        .form-buttons {
+            display: flex;
+            gap: 10px;
+        }
+
+        .submit-button {
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .cancel-button {
+            background: #dc3545;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .announcement-item {
+            background: var(--section-bg);
+            padding: 20px;
+            margin: 15px 0;
+            border-radius: 8px;
+            box-shadow: var(--card-shadow);
+            position: relative;
+        }
+
+        .announcement-title {
+            font-size: 1.2em;
+            font-weight: bold;
+            margin-bottom: 10px;
+            color: var(--primary-color);
+        }
+
+        .announcement-date {
+            font-size: 0.9em;
+            color: #666;
+            margin-bottom: 10px;
+        }
+
+        .announcement-text {
+            line-height: 1.5;
+        }
+
+        .delete-announcement {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: none;
+            border: none;
+            color: #dc3545;
+            cursor: pointer;
+            font-size: 1.2em;
+            transition: all 0.3s ease;
+        }
+
+        .delete-announcement:hover {
+            transform: scale(1.1);
+        }
+
+        .pinned-message-container {
+            background: var(--primary-color);
+            color: white;
+            padding: 10px 0;
+            position: relative;
+            animation: slideDown 0.3s ease;
+        }
+
+        @keyframes slideDown {
+            from { transform: translateY(-100%); }
+            to { transform: translateY(0); }
+        }
+
+        .pinned-message {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .pinned-message i.fa-thumbtack {
+            transform: rotate(45deg);
+            font-size: 0.9em;
+        }
+
+        .unpin-button {
+            background: none;
+            border: none;
+            color: white;
+            cursor: pointer;
+            padding: 5px;
+            margin-left: auto;
+            opacity: 0.7;
+            transition: opacity 0.3s ease;
+        }
+
+        .unpin-button:hover {
+            opacity: 1;
+        }
+
+        .pin-message-form {
+            background: var(--section-bg);
+            padding: 20px;
+            border-radius: 8px;
+            margin-top: 15px;
+            box-shadow: var(--card-shadow);
+        }
+
+        .pin-message-form textarea {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 15px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            min-height: 80px;
+            resize: vertical;
+        }
+
+        .pin-button {
+            background: var(--secondary-color);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-right: 10px;
+        }
+
+        .pin-button:hover {
+            background: var(--primary-color);
+        }
+
+        /* Προσαρμογή του container για να μην καλύπτεται από το menu */
+        .container {
+            padding-top: 10px; /* Μικρότερο padding */
+        }
+
+        /* Προσαρμογή του header */
+        .main-header {
+            padding-right: 60px; /* Χώρος για το menu button */
+        }
+
+        .chapter {
+            background: white;
+            padding: 15px;
+            margin-bottom: 15px;
+            border-radius: 8px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+
+        .chapter h3 {
+            color: var(--primary-color);
+            font-size: 1.1em;
+            margin-bottom: 10px;
+            padding-bottom: 8px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .files {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 8px;
+        }
+
+        .files a {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px;
+            font-size: 0.9em;
+            text-decoration: none;
+            color: #333;
+            background: #f8f9fa;
+            border-radius: 4px;
+            transition: all 0.2s ease;
+        }
+
+        .files a:hover {
+            background: #e9ecef;
+            transform: translateX(3px);
+        }
+
+        .files a i {
+            color: #dc3545;
+            font-size: 0.9em;
+        }
+
+        .files a.revision {
+            background: #e3f2fd;
+        }
+
+        .files a.revision i {
+            color: var(--primary-color);
+        }
+
+        .files a.revision:hover {
+            background: #bbdefb;
+        }
+
+        @media (max-width: 768px) {
+            .files {
+                grid-template-columns: 1fr;
+            }
+            
+            .chapter {
+                padding: 12px;
+                margin-bottom: 12px;
+            }
+        }
+
+        .materials-tabs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .tab-btn {
+            padding: 10px 20px;
+            border: none;
+            background: #f8f9fa;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .tab-btn.active {
+            background: var(--primary-color);
+            color: white;
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        /* Quiz Styles */
+        .quiz-form {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+
+        .question-item {
+            background: #f8f9fa;
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 4px;
+        }
+
+        .question-header {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 10px;
+        }
+
+        .question-text {
+            flex: 1;
+        }
+
+        .options-container {
+            margin: 10px 0;
+        }
+
+        .option-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin: 5px 0;
+        }
+
+        .quiz-results {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            margin-top: 20px;
+        }
+
+        .result-item {
+            padding: 10px;
+            margin: 5px 0;
+            border-radius: 4px;
+        }
+
+        .result-item.correct {
+            background: #d4edda;
+        }
+
+        .result-item.incorrect {
+            background: #f8d7da;
+        }
+
+        .final-score {
+            font-size: 1.2em;
+            font-weight: bold;
+            text-align: center;
+            margin: 20px 0;
+        }
+
+        .admin-buttons {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 10px;
+            margin-top: 15px;
+        }
+
+        .admin-buttons button {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            padding: 12px;
+            border: none;
+            border-radius: 4px;
+            background: var(--primary-color);
+            color: white;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .admin-buttons button:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+        }
+
+        .admin-buttons i {
+            font-size: 1.2em;
+        }
+
+        .admin-controls {
+            margin-bottom: 20px;
+        }
+
+        .admin-btn {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 20px;
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .admin-btn:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+        }
+
+        .admin-btn i {
+            font-size: 1.1em;
+        }
+
+        .admin-quiz-controls {
+            margin: 20px 0;
+        }
+
+        .admin-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 20px;
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .admin-button:hover {
+            background: var(--primary-dark);
+        }
+
+        .quiz-form {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .question-container {
+            background: #f8f9fa;
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 4px;
+        }
+
+        .question-header {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 10px;
+        }
+
+        .option-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin: 5px 0;
+        }
+
+        .form-buttons {
+            display: flex;
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        .submit-btn, .cancel-btn {
+            padding: 8px 16px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .submit-btn {
+            background: var(--primary-color);
+            color: white;
+        }
+
+        .cancel-btn {
+            background: #dc3545;
+            color: white;
+        }
+
+        .quiz-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .create-quiz-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 20px;
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .create-quiz-btn:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+        }
+    </style>
+</head>
+<body>
+    <div class="login-container" id="loginContainer">
+        <form class="login-form" id="loginForm">
+            <h2>Σύνδεση</h2>
+            <input type="text" placeholder="Username" id="username" required>
+            <input type="password" placeholder="Password" id="password" required>
+            <div class="remember-me">
+                <input type="checkbox" id="remember">
+                <label for="remember">Να με θυμάσαι</label>
+            </div>
+            <button type="submit">Σύνδεση</button>
+        </form>
+    </div>
+
+    <div class="pinned-message-container" id="pinnedMessageContainer" style="display: none;">
+        <div class="pinned-message" id="pinnedMessage">
+            <i class="fas fa-thumbtack"></i>
+            <span id="pinnedMessageText"></span>
+            <button id="unpinMessage" class="unpin-button" onclick="unpinMessage()">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+    </div>
+
+    <div class="container">
+        <header class="main-header">
+            <div class="header-content">
+                <h1>Άλγεβρα Α' Λυκείου</h1>
+                <div class="divider">
+                    <span class="divider-line"></span>
+                    <i class="fas fa-square-root-alt"></i>
+                    <span class="divider-line"></span>
+                </div>
+                <p>Ηλεκτρονική Τάξη Υποστήριξης</p>
+            </div>
+        </header>
+
+        <nav class="main-nav">
+            <div class="mobile-menu-toggle">
+                <i class="fas fa-bars"></i>
+            </div>
+            <ul class="nav-links">
+                <li><a href="#announcements">Ανακοινώσεις</a></li>
+                <li><a href="#schedule">Πρόγραμμα</a></li>
+                <li><a href="#materials">Υλικό</a></li>
+                <li><a href="#syllabus">Ύλη</a></li>
+                <li><a href="#contact">Επικοινωνία</a></li>
+            </ul>
+        </nav>
+
+        <!-- 1. Ανακοινώσεις -->
+        <div class="section announcements" id="announcements">
+            <h2>Ανακοινώσεις</h2>
+            <div class="admin-controls" id="adminAnnouncementControls" style="display: none;">
+                <button onclick="showAddAnnouncementForm()" class="add-button">
+                    <i class="fas fa-plus"></i> Νέα Ανακοίνωση
+                </button>
+            </div>
+            
+            <!-- Φόρμα προσθήκης ανακοίνωσης -->
+            <div class="announcement-form" id="addAnnouncementForm" style="display: none;">
+                <input type="text" id="announcementTitle" placeholder="Τίτλος ανακοίνωσης" required>
+                <textarea id="announcementText" placeholder="Κείμενο ανακοίνωσης" required></textarea>
+                <div class="form-buttons">
+                    <button onclick="addAnnouncement()" class="submit-button">Προσθήκη</button>
+                    <button onclick="hideAddAnnouncementForm()" class="cancel-button">Ακύρωση</button>
+                </div>
+            </div>
+            
+            <div id="announcementsList"></div>
+        </div>
+
+        <!-- 2. Πρόγραμμα Μαθημάτων -->
+        <div class="section" id="schedule">
+            <h2>Πρόγραμμα Μαθημάτων</h2>
+            <div class="admin-controls" id="adminControls">
+                <button onclick="showAddLessonForm()" class="add-button"><i class="fas fa-plus"></i> Προσθήκη Μαθήματος</button>
+                <div class="add-lesson-form" id="addLessonForm">
+                    <select id="lessonDay" required>
+                        <option value="">Επιλέξτε Ημέρα</option>
+                        <option value="Δευτέρα">Δευτέρα</option>
+                        <option value="Τρίτη">Τρίτη</option>
+                        <option value="Τετάρτη">Τετάρτη</option>
+                        <option value="Πέμπτη">Πέμπτη</option>
+                        <option value="Παρασκευή">Παρασκευή</option>
+                        <option value="Σάββατο">Σάββατο</option>
+                        <option value="Κυριακή">Κυριακή</option>
+                    </select>
+                    <input 
+                        type="time" 
+                        id="lessonTime" 
+                        required 
+                        step="1800"
+                    >
+                    <input type="text" id="lessonNotes" placeholder="Σημειώσεις μαθήματος (προαιρετικά)">
+                    <button onclick="addLesson()">Προσθήκη</button>
+                    <button onclick="hideAddLessonForm()" class="cancel-button">Ακύρωση</button>
+                </div>
+            </div>
+            <div id="lessonSchedule" class="lesson-schedule">
+                <!-- Εδώ θα εμφανίζονται τα μαθήματα -->
+            </div>
+        </div>
+
+        <!-- 3. Εκπαιδευτικό Υλικό -->
+        <div class="section materials" id="materials">
+            <h2>Εκπαιδευτικό Υλικό</h2>
+            
+            <!-- Tabs -->
+            <div class="materials-tabs">
+                <button class="tab-btn active" onclick="switchTab('schoolBook')">Σχολικό Βιβλίο</button>
+                <button class="tab-btn" onclick="switchTab('extraMaterial')">Βοηθητικό Υλικό</button>
+            </div>
+
+            <!-- Σχολικό Βιβλίο -->
+            <div id="schoolBook" class="tab-content active">
+                <!-- Εισαγωγικό Κεφάλαιο -->
+                <div class="chapter">
+                    <h3>Εισαγωγικό Κεφάλαιο</h3>
+                    <div class="files">
+                        <a href="materials/0_E1.pdf" target="_blank"><i class="fas fa-file-pdf"></i> Εισαγωγή</a>
+                        <a href="materials/0_E2.pdf" target="_blank"><i class="fas fa-file-pdf"></i> Σύνολα</a>
+                    </div>
+                </div>
+                <h3>Κεφάλαιο 2: Οι Πραγματικοί Αριθμοί</h3>
+                <div class="files">
+                    <a href="materials/2_1.pdf" target="_blank"><i class="fas fa-file-pdf"></i> 2.1 Πράξεις και Ιδιότητες</a>
+                    <a href="materials/2_2.pdf" target="_blank"><i class="fas fa-file-pdf"></i> 2.2 Διάταξη Αριθμών</a>
+                    <a href="materials/2_3.pdf" target="_blank"><i class="fas fa-file-pdf"></i> 2.3 Απόλυτη Τιμή</a>
+                    <a href="materials/2_4.pdf" target="_blank"><i class="fas fa-file-pdf"></i> 2.4 Ρίζες</a>
+                    <a href="materials/2_revision.pdf" target="_blank" class="revision"><i class="fas fa-tasks"></i> Ερωτήσεις Κατανόησης</a>
+                </div>
+                <h3>Κεφάλαιο 3: Εξισώσεις</h3>
+                <div class="files">
+                    <a href="materials/3_1.pdf" target="_blank"><i class="fas fa-file-pdf"></i> 3.1 Εξισώσεις 1ου Βαθμού</a>
+                    <a href="materials/3_2.pdf" target="_blank"><i class="fas fa-file-pdf"></i> 3.2 Εξίσωση xν = α</a>
+                    <a href="materials/3_3.pdf" target="_blank"><i class="fas fa-file-pdf"></i> 3.3 Εξισώσεις 2ου Βαθμού</a>
+                    <a href="materials/3_revision.pdf" target="_blank" class="revision"><i class="fas fa-tasks"></i> Ερωτήσεις Κατανόησης</a>
+                </div>
+                <h3>Κεφάλαιο 4: Ανισώσεις</h3>
+                <div class="files">
+                    <a href="materials/4_1.pdf" target="_blank"><i class="fas fa-file-pdf"></i> 4.1 Ανισώσεις 1ου Βαθμού</a>
+                    <a href="materials/4_2.pdf" target="_blank"><i class="fas fa-file-pdf"></i> 4.2 Ανισώσεις 2ου Βαθμού</a>
+                    <a href="materials/4_revision.pdf" target="_blank" class="revision"><i class="fas fa-tasks"></i> Ερωτήσεις Κατανόησης</a>
+                </div>
+                <h3>Κεφάλαιο 5: Πρόοδοι</h3>
+                <div class="files">
+                    <a href="materials/5_1.pdf" target="_blank"><i class="fas fa-file-pdf"></i> 5.1 Ακολουθίες</a>
+                    <a href="materials/5_2.pdf" target="_blank"><i class="fas fa-file-pdf"></i> 5.2 Αριθμητική Πρόοδος</a>
+                    <a href="materials/5_3.pdf" target="_blank"><i class="fas fa-file-pdf"></i> 5.3 Γεωμετρική Πρόοδος</a>
+                </div>
+                <h3>Κεφάλαιο 6: Συναρτήσεις</h3>
+                <div class="files">
+                    <a href="materials/6_1.pdf" target="_blank"><i class="fas fa-file-pdf"></i> 6.1 ΈΈννοια Συνάρτησης</a>
+                    <a href="materials/6_2.pdf" target="_blank"><i class="fas fa-file-pdf"></i> 6.2 Γραφική Παράσταση</a>
+                    <a href="materials/6_3.pdf" target="_blank"><i class="fas fa-file-pdf"></i> 6.3 Γραμμική Συνάρτηση</a>
+                </div>
+            </div>
+
+            <!-- Βοηθητικό Υλικό -->
+            <div id="extraMaterial" class="tab-content">
+                <div class="extra-material-content">
+                    <h3>Βοηθητικό Υλικό</h3>
+                    <p>Σύντομα θα προστεθεί επιπλέον εκπαιδευτικό υλικό.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Υπόλοιπα τμήματα -->
+        <div class="section syllabus" id="syllabus">
+            <h2>Ύλη Μαθήματος</h2>
+            <div class="chapter">
+                <h3>Εισαγωγικό κεφάλαιο</h3>
+                <ul>
+                    <li>E.2. Σύνολα</li>
+                </ul>
+            </div>
+
+            <div class="chapter">
+                <h3>Κεφ.2ο: Οι Πραγματικοί Αριθμοί</h3>
+                <ul>
+                    <li>2.1 Οι Πράξεις και οι Ιδιότητές τους</li>
+                    <li>2.2 Διάταξη Αριθμών <span class="note">(εκτός της απόδειξης της ιδιότητας 4)</span></li>
+                    <li>2.3 Απόλυτη Τιμή Πραγματικού Αριθμού</li>
+                    <li>2.4 Ρίζες Πραγματικών Αριθμών <span class="note">(εκτός των ιδιοτήτων 3 και 4)</span></li>
+                </ul>
+            </div>
+
+            <div class="chapter">
+                <h3>Κεφ.3ο: Εξισώσεις</h3>
+                <ul>
+                    <li>3.1 Εξισώσεις 1ου Βαθμού</li>
+                    <li>3.2 Η Εξίσωση xν = α</li>
+                    <li>3.3 Εξισώσεις 2ου Βαθμού</li>
+                </ul>
+            </div>
+
+            <div class="chapter">
+                <h3>Κεφ.4ο: Ανισώσεις</h3>
+                <ul>
+                    <li>4.1 Ανισώσεις 1ου Βαθμού</li>
+                    <li>4.2 Ανισώσεις 2ου Βαθμού</li>
+                </ul>
+            </div>
+
+            <div class="chapter">
+                <h3>Κεφ.5ο: Πρόοδοι</h3>
+                <ul>
+                    <li>5.1 Ακολουθίες</li>
+                    <li>5.2 Αριθμητική Πρόοδος <span class="note">(εκτός της απόδειξης για το "άθροισμα ν διαδοχικών όρων αριθμητικής προόδου")</span></li>
+                    <li>5.3 Γεωμετρική Πρόοδος <span class="note">(εκτός της απόδειξης για το "άθροισμα ν διαδοχικών όρων γεωμετρικής προόδου")</span></li>
+                </ul>
+            </div>
+
+            <div class="chapter">
+                <h3>Κεφ.6ο: Συναρτήσεις</h3>
+                <ul>
+                    <li>6.1 Η έννοια της Συνάρτησης</li>
+                    <li>6.2 Γραφική Παράσταση</li>
+                    <li>6.3 Η Συνάρτηση f(x)= αx+β</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="section contact" id="contact">
+            <h2>Επικοινωνία</h2>
+            <div class="contact-info">
+                <div class="contact-item">
+                    <i class="fab fa-instagram"></i>
+                    <a href="https://www.instagram.com/basilis_golfos/" target="_blank">@basilis_golfos</a>
+                </div>
+                <div class="contact-item">
+                    <i class="far fa-envelope"></i>
+                    <a href="mailto:golfosb@outlook.com">golfosb@outlook.com</a>
+                </div>
+                <div class="contact-item">
+                    <i class="fas fa-phone-alt"></i>
+                    <a href="tel:+306982871602">6982871602</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="main-footer">
+        <div class="footer-content">
+            <p><i class="far fa-registered"></i> All rights reserved - Golfos Vasileios 2025</p>
+        </div>
+    </footer>
+
+    <!-- Admin Panel -->
+    <div id="adminPanel" class="admin-panel" style="display: none;">
+        <h3>Πίνακας Διαχείρισης</h3>
+        <div class="admin-buttons">
+            <button onclick="showAddAnnouncementForm()">
+                <i class="fas fa-bullhorn"></i>
+                Νέα Ανακοίνωση
+            </button>
+            <button onclick="showCautionForm()">
+                <i class="fas fa-exclamation-triangle"></i>
+                Προσθήκη Caution
+            </button>
+            <button onclick="showQuizForm()">
+                <i class="fas fa-question-circle"></i>
+                Δημιουργία Quiz
+            </button>
+            <button onclick="logout()">
+                <i class="fas fa-sign-out-alt"></i>
+                Αποσύνδεση
+            </button>
+        </div>
+    </div>
+
+    <!-- Admin Section -->
+    <div class="admin-section" id="adminSection" style="display: none;">
+        <h2>Διαχείριση</h2>
+        <div class="admin-buttons">
+            <button onclick="showAnnouncementForm()">
+                <i class="fas fa-bullhorn"></i>
+                Νέα Ανακοίνωση
+            </button>
+            <button onclick="showCautionForm()">
+                <i class="fas fa-exclamation-triangle"></i>
+                Προσθήκη Caution
+            </button>
+            <button onclick="showQuizForm()">
+                <i class="fas fa-question-circle"></i>
+                Δημιουργία Quiz
+            </button>
+        </div>
+    </div>
+
+    <script>
+        // Στοιχεία σύνδεσης
+        const ADMIN_CREDENTIALS = {
+            username: 'admin',
+            password: 'admin1234'
+        };
+        const USER_CREDENTIALS = {
+            username: 'user',
+            password: '1234'
+        };
+
+        let isAdmin = false;
+        let events = JSON.parse(localStorage.getItem('calendarEvents')) || {};
+        let lessons = JSON.parse(localStorage.getItem('lessons')) || [];
+        let announcements = JSON.parse(localStorage.getItem('announcements')) || [];
+
+        document.getElementById('loginForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+            const remember = document.getElementById('remember').checked;
+
+            if (username === ADMIN_CREDENTIALS.username && password === ADMIN_CREDENTIALS.password) {
+                isAdmin = true;
+                loginSuccess(remember);
+            } else if (username === USER_CREDENTIALS.username && password === USER_CREDENTIALS.password) {
+                isAdmin = false;
+                loginSuccess(remember);
+            } else {
+                alert('Λάθος στοιχεία σύνδεσης!');
+            }
+        });
+
+        function loginSuccess(remember) {
+            if (remember) {
+                localStorage.setItem('isLoggedIn', 'true');
+                localStorage.setItem('isAdmin', isAdmin);
+            }
+            document.getElementById('loginContainer').style.display = 'none';
+            document.querySelector('.container').style.display = 'block';
+            if (isAdmin) {
+                document.getElementById('adminControls').style.display = 'block';
+                document.getElementById('adminAnnouncementControls').style.display = 'block';
+            }
+            // Εμφάνιση του pinned message αν υπάρχει
+            if (pinnedMessage) {
+                document.getElementById('pinnedMessageText').textContent = pinnedMessage;
+                document.getElementById('pinnedMessageContainer').style.display = 'block';
+            }
+            renderAnnouncements();
+            renderLessons();
+        }
+
+        function showAddLessonForm() {
+            document.getElementById('addLessonForm').style.display = 'block';
+        }
+
+        function hideAddLessonForm() {
+            document.getElementById('addLessonForm').style.display = 'none';
+        }
+
+        function addLesson() {
+            const day = document.getElementById('lessonDay').value;
+            const time = document.getElementById('lessonTime').value;
+            const notes = document.getElementById('lessonNotes').value;
+
+            if (!day || !time) {
+                alert('Παρακαλώ συμπληρώστε ημέρα και ώρα!');
+                return;
+            }
+
+            lessons.push({
+                day,
+                time,
+                notes
+            });
+
+            // Ταξινόμηση μαθημάτων με βάση την ημέρα και ώρα
+            lessons.sort((a, b) => {
+                const days = ['Δευτέρα', 'Τρίτη', 'Τετάρτη', 'Πέμπτη', 'Παρασκευή', 'Σάββατο', 'Κυριακή'];
+                if (a.day !== b.day) {
+                    return days.indexOf(a.day) - days.indexOf(b.day);
+                }
+                return a.time.localeCompare(b.time);
+            });
+
+            localStorage.setItem('lessons', JSON.stringify(lessons));
+            renderLessons();
+            hideAddLessonForm();
+            
+            // Καθαρισμός φόρμας
+            document.getElementById('lessonDay').value = '';
+            document.getElementById('lessonTime').value = '';
+            document.getElementById('lessonNotes').value = '';
+        }
+
+        function deleteLesson(index) {
+            if (confirm('Είστε σίγουροι ότι θέλετε να διαγράψετε αυτό το μάθημα;')) {
+                lessons.splice(index, 1);
+                localStorage.setItem('lessons', JSON.stringify(lessons));
+                renderLessons();
+            }
+        }
+
+        function renderLessons() {
+            const container = document.getElementById('lessonSchedule');
+            container.innerHTML = '';
+
+            if (lessons.length === 0) {
+                container.innerHTML = '<p>Δεν υπάρχουν προγραμματισμένα μαθήματα.</p>';
+                return;
+            }
+
+            lessons.forEach((lesson, index) => {
+                const lessonElement = document.createElement('div');
+                lessonElement.className = 'lesson-item';
+                
+                const timeFormatted = lesson.time.substring(0, 5); // Κρατάμε μόνο ώρα:λεπτά
+                
+                lessonElement.innerHTML = `
+                    <div>
+                        <strong>${lesson.day}</strong> στις ${timeFormatted}
+                        ${lesson.notes ? `<br><small>${lesson.notes}</small>` : ''}
+                    </div>
+                    ${isAdmin ? `<button class="delete-lesson" onclick="deleteLesson(${index})">Διαγραφή</button>` : ''}
+                `;
+                
+                container.appendChild(lessonElement);
+            });
+        }
+
+        function showAddAnnouncementForm() {
+            const form = document.getElementById('addAnnouncementForm');
+            if (form) {
+                form.style.display = 'block';
+                // Καθαρισμός των πεδίων
+                document.getElementById('announcementTitle').value = '';
+                document.getElementById('announcementText').value = '';
+            }
+        }
+
+        function hideAddAnnouncementForm() {
+            const form = document.getElementById('addAnnouncementForm');
+            if (form) {
+                form.style.display = 'none';
+            }
+        }
+
+        function addAnnouncement() {
+            const titleInput = document.getElementById('announcementTitle');
+            const textInput = document.getElementById('announcementText');
+
+            const title = titleInput.value.trim();
+            const text = textInput.value.trim();
+
+            if (!title || !text) {
+                alert('Παρακαλώ συμπληρώστε όλα τα πεδία!');
+                return;
+            }
+
+            const newAnnouncement = {
+                id: Date.now(),
+                title: title,
+                text: text,
+                date: new Date().toLocaleDateString('el-GR')
+            };
+
+            // Προσθήκη στην αρχή του πίνακα
+            announcements.unshift(newAnnouncement);
+            
+            // Αποθήκευση στο localStorage
+            localStorage.setItem('announcements', JSON.stringify(announcements));
+            
+            // Απόκρυψη φόρμας και επανεμφάνιση λίστας
+            hideAddAnnouncementForm();
+            renderAnnouncements();
+        }
+
+        function deleteAnnouncement(id) {
+            if (confirm('Είστε σίγουροι ότι θέλετε να διαγράψετε αυτή την ανακοίνωση;')) {
+                announcements = announcements.filter(a => a.id !== id);
+                localStorage.setItem('announcements', JSON.stringify(announcements));
+                renderAnnouncements();
+            }
+        }
+
+        function renderAnnouncements() {
+            const container = document.getElementById('announcementsList');
+            if (!container) return;
+
+            container.innerHTML = '';
+
+            if (announcements.length === 0) {
+                container.innerHTML = '<p class="no-announcements">Δεν υπάρχουν ανακοινώσεις.</p>';
+                return;
+            }
+
+            announcements.forEach(announcement => {
+                const announcementElement = document.createElement('div');
+                announcementElement.className = 'announcement-item';
+                
+                announcementElement.innerHTML = `
+                    <div class="announcement-title">${announcement.title}</div>
+                    <div class="announcement-date">${announcement.date}</div>
+                    <div class="announcement-text">${announcement.text}</div>
+                    ${isAdmin ? `
+                        <button class="delete-announcement" onclick="deleteAnnouncement(${announcement.id})">
+                            <i class="fas fa-times"></i>
+                        </button>
+                    ` : ''}
+                `;
+                
+                container.appendChild(announcementElement);
+            });
+        }
+
+        // Έλεγχος αν ο χρήστης είναι ήδη συνδεδεμένος
+        window.onload = function() {
+            if (localStorage.getItem('isLoggedIn') === 'true') {
+                isAdmin = localStorage.getItem('isAdmin') === 'true';
+                document.getElementById('loginContainer').style.display = 'none';
+                document.querySelector('.container').style.display = 'block';
+                if (isAdmin) {
+                    document.getElementById('adminControls').style.display = 'block';
+                    document.getElementById('adminAnnouncementControls').style.display = 'block';
+                }
+                renderAnnouncements();
+                renderLessons();
+            }
+        }
+
+        // Ενεργό στοιχείο μενού κατά το scroll
+        window.addEventListener('scroll', function() {
+            const sections = document.querySelectorAll('.section');
+            const navLinks = document.querySelectorAll('.main-nav a');
+            
+            let current = '';
+            
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                if (pageYOffset >= sectionTop - 60) {
+                    current = section.getAttribute('id');
+                }
+            });
+
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href').substring(1) === current) {
+                    link.classList.add('active');
+                }
+            });
+        });
+
+        // Προσθήκη animation στα sections κατά το scroll
+        const observerOptions = {
+            threshold: 0.1
+        };
+
+        const observer = new IntersectionObserver(entries => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.section').forEach(section => {
+            section.style.opacity = '0';
+            section.style.transform = 'translateY(20px)';
+            observer.observe(section);
+        });
+
+        // Menu toggle
+        const menuToggle = document.querySelector('.mobile-menu-toggle');
+        const navLinks = document.querySelector('.nav-links');
+
+        menuToggle.addEventListener('click', () => {
+            navLinks.classList.toggle('active');
+        });
+
+        // Κλείσιμο του menu όταν γίνεται κλικ σε κάποιο link
+        document.querySelectorAll('.nav-links a').forEach(link => {
+            link.addEventListener('click', () => {
+                navLinks.classList.remove('active');
+            });
+        });
+
+        // Κλείσιμο του menu όταν γίνεται κλικ έξω από αυτό
+        document.addEventListener('click', (e) => {
+            if (!e.target.closest('.main-nav')) {
+                navLinks.classList.remove('active');
+            }
+        });
+
+        // Κλείσιμο του menu όταν γίνεται scroll
+        window.addEventListener('scroll', () => {
+            navLinks.classList.remove('active');
+        });
+
+        // Αρχική φόρτωση ανακοινώσεων
+        window.addEventListener('load', () => {
+            renderAnnouncements();
+        });
+
+        // Αρχικοποίηση του pinned message από το localStorage
+        let pinnedMessage = localStorage.getItem('pinnedMessage') || '';
+
+        function showPinMessageForm() {
+            document.getElementById('pinMessageForm').style.display = 'block';
+            document.getElementById('pinnedMessageInput').value = pinnedMessage;
+        }
+
+        function hidePinMessageForm() {
+            document.getElementById('pinMessageForm').style.display = 'none';
+        }
+
+        function pinMessage() {
+            const message = document.getElementById('pinnedMessageInput').value.trim();
+            
+            if (!message) {
+                alert('Παρακαλώ γράψτε ένα μήνυμα!');
+                return;
+            }
+
+            pinnedMessage = message;
+            localStorage.setItem('pinnedMessage', message);
+            
+            document.getElementById('pinnedMessageText').textContent = message;
+            document.getElementById('pinnedMessageContainer').style.display = 'block';
+            
+            hidePinMessageForm();
+        }
+
+        function unpinMessage() {
+            if (confirm('Είστε σίγουροι ότι θέλετε να αφαιρέσετε το καρφιτσωμένο μήνυμα;')) {
+                pinnedMessage = '';
+                localStorage.removeItem('pinnedMessage');
+                document.getElementById('pinnedMessageContainer').style.display = 'none';
+            }
+        }
+
+        // Αρχική φόρτωση pinned message
+        window.addEventListener('load', () => {
+            if (pinnedMessage) {
+                document.getElementById('pinnedMessageText').textContent = pinnedMessage;
+                document.getElementById('pinnedMessageContainer').style.display = 'block';
+            }
+        });
+
+        // Προσθήκη της συνάρτησης αλλαγής καρτέλας
+        function switchTab(tabId) {
+            // Απενεργοποίηση όλων των καρτελών
+            document.querySelectorAll('.tab-content').forEach(tab => {
+                tab.classList.remove('active');
+                tab.style.display = 'none';
+            });
+            
+            // Απενεργοποίηση όλων των κουμπιών
+            document.querySelectorAll('.tab-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            
+            // Ενεργοποίηση της επιλεγμένης καρτέλας
+            const selectedTab = document.getElementById(tabId);
+            selectedTab.classList.add('active');
+            selectedTab.style.display = 'block';
+            
+            // Ενεργοποίηση του επιλεγμένου κουμπιού
+            const selectedBtn = document.querySelector(`[onclick="switchTab('${tabId}')"]`);
+            selectedBtn.classList.add('active');
+        }
+
+        // Προσθήκη στο DOMContentLoaded
+        document.addEventListener('DOMContentLoaded', function() {
+            // Αρχική εμφάνιση της πρώτης καρτέλας
+            document.getElementById('schoolBook').style.display = 'block';
+            
+            // Έλεγχος για admin controls
+            checkAdminQuizControls();
+        });
+
+        // Προσθήκη στις υπάρχουσες συναρτήσεις
+        function checkAdminStatus() {
+            const isAdmin = localStorage.getItem('isAdmin') === 'true';
+            document.getElementById('adminPanel').style.display = isAdmin ? 'block' : 'none';
+            document.getElementById('createQuizBtn').style.display = isAdmin ? 'block' : 'none';
+        }
+
+        // Προσθήκη στο DOMContentLoaded
+        document.addEventListener('DOMContentLoaded', () => {
+            checkAdminStatus();
+            renderQuizzes();
+        });
+
+        // Προσθήκη στη συνάρτηση login
+        function login(username, password) {
+            // ... υπάρχων κώδικας ...
+            checkAdminStatus();
+        }
+
+        // Προσθήκη στη συνάρτηση logout
+        function logout() {
+            // ... υπάρχων κώδικας ...
+            checkAdminStatus();
+        }
+
+        // Έλεγχος για admin και εμφάνιση των σχετικών controls
+        function checkAdminQuizControls() {
+            const isAdmin = localStorage.getItem('isAdmin') === 'true';
+            const adminControls = document.getElementById('adminQuizControls');
+            if (adminControls) {
+                adminControls.style.display = isAdmin ? 'block' : 'none';
+            }
+        }
+
+        // Εμφάνιση φόρμας quiz
+        function showQuizForm() {
+            document.getElementById('quizForm').style.display = 'block';
+            document.getElementById('questionsContainer').innerHTML = '';
+            document.getElementById('quizTitle').value = '';
+        }
+
+        // Απόκρυψη φόρμας quiz
+        function hideQuizForm() {
+            document.getElementById('quizForm').style.display = 'none';
+        }
+
+        // Προσθήκη ερώτησης στο quiz
+        function addQuizQuestion() {
+            const container = document.getElementById('questionsContainer');
+            const questionDiv = document.createElement('div');
+            questionDiv.className = 'question-container';
+            questionDiv.innerHTML = `
+                <div class="question-header">
+                    <input type="text" class="question-text" placeholder="Ερώτηση" required>
+                    <select class="question-type" onchange="updateQuestionOptions(this)">
+                        <option value="single">Μία σωστή απάντηση</option>
+                        <option value="multiple">Πολλαπλές σωστές απαντήσεις</option>
+                        <option value="truefalse">Σωστό/Λάθος</option>
+                    </select>
+                    <button onclick="removeQuestion(this)" class="remove-btn">
+                        <i class="fas fa-trash"></i>
+                    </button>
+                </div>
+                <div class="options-container"></div>
+                <button onclick="addOption(this)" class="add-option-btn">
+                    <i class="fas fa-plus"></i> Προσθήκη Επιλογής
+                </button>
+            `;
+            container.appendChild(questionDiv);
+            updateQuestionOptions(questionDiv.querySelector('.question-type'));
+        }
+
+        // Ενημέρωση των επιλογών ανάλογα με τον τύπο της ερώτησης
+        function updateQuestionOptions(select) {
+            const optionsContainer = select.closest('.question-container').querySelector('.options-container');
+            const addOptionBtn = select.closest('.question-container').querySelector('.add-option-btn');
+            optionsContainer.innerHTML = '';
+
+            if (select.value === 'truefalse') {
+                optionsContainer.innerHTML = `
+                    <div class="option-item">
+                        <input type="radio" name="correct_${Date.now()}" value="true" required>
+                        <label>Σωστό</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="correct_${Date.now()}" value="false" required>
+                        <label>Λάθος</label>
+                    </div>
+                `;
+                addOptionBtn.style.display = 'none';
+            } else {
+                addOptionBtn.style.display = 'block';
+                addOption(select);
+                addOption(select);
+            }
+        }
+
+        // Προσθήκη επιλογής απάντησης
+        function addOption(element) {
+            const container = element.closest('.question-container').querySelector('.options-container');
+            const type = element.closest('.question-container').querySelector('.question-type').value;
+            const inputType = type === 'single' ? 'radio' : 'checkbox';
+            const optionDiv = document.createElement('div');
+            optionDiv.className = 'option-item';
+            optionDiv.innerHTML = `
+                <input type="${inputType}" name="correct_${Date.now()}">
+                <input type="text" placeholder="Επιλογή" required>
+                <button onclick="removeOption(this)" class="remove-btn">
+                    <i class="fas fa-times"></i>
+                </button>
+            `;
+            container.appendChild(optionDiv);
+        }
+
+        // Αρχικοποίηση
+        document.addEventListener('DOMContentLoaded', function() {
+            checkAdminQuizControls();
+        });
+
+        // Ενημέρωση μετά από login/logout
+        function login(username, password) {
+            // ... υπάρχων κώδικας login ...
+            checkAdminQuizControls();
+        }
+
+        function logout() {
+            // ... υπάρχων κώδικας logout ...
+            checkAdminQuizControls();
+        }
+    </script>
+</body>
+</html>
