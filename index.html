@@ -154,10 +154,32 @@
             <i class="fas fa-folder"></i>
             <div class="name">Ερωτήσεις κατανόησης</div>
         </div>
+
+        
         <div class="folder" onclick="toggleFolder('additional-material')">
             <i class="fas fa-folder"></i>
             <div class="name">Συμπληρωματικό υλικό</div>
         </div>
+        <div id="additional-material-files" style="display: none; margin-left: 20px;">
+            <div class="file" onclick="openFile('materials/2_1.pdf')">
+                <i class="fas fa-file-pdf"></i>
+                <div class="name">2.1 Οι πραγματικοί αριθμοί</div>
+            </div>
+            <div class="file" onclick="openFile('materials/my2_2.pdf')">
+                <i class="fas fa-file-pdf"></i>
+                <div class="name">2.2 Διάταξη πραγματικών αριθμών</div>
+            </div>
+            <div class="file" onclick="openFile('materials/my2_3.pdf')">
+                <i class="fas fa-file-pdf"></i>
+                <div class="name">2.3 Απόλυτη τιμή πραγματικού αριθμού</div>
+            </div>
+            <div class="file" onclick="checkAndOpenFile('materials/my2_4.pdf')">
+                <i class="fas fa-file-pdf"></i>
+                <div class="name">2.4 Ρίζες πραγματικών αριθμών</div>
+            </div>
+        </div>
+
+        
         <div class="folder" onclick="toggleFolder('exercises')">
             <i class="fas fa-folder"></i>
             <div class="name">Ασκήσεις</div>
@@ -215,6 +237,20 @@
         // Ενημέρωση του HTML με τις πληροφορίες
         document.getElementById('next-lesson-date').textContent = `Δευτέρα ${nextLessonDate}`;
         document.getElementById('next-lesson-time').textContent = nextLessonTime;
+
+        function checkAndOpenFile(filePath) {
+        fetch(filePath, { method: 'HEAD' })
+            .then(response => {
+                if (response.ok) {
+                    window.location.href = filePath; // Αν το αρχείο υπάρχει, άνοιξέ το
+                } else {
+                    window.location.href = 'coming_soon.html'; // Αν δεν υπάρχει, πήγαινε στη coming_soon.html
+                }
+            })
+            .catch(() => {
+                window.location.href = 'coming_soon.html'; // Αν υπάρξει κάποιο σφάλμα, πήγαινε στη coming_soon.html
+            });
+}
     </script>
 </body>
 </html>
