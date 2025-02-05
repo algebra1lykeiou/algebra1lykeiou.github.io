@@ -99,10 +99,274 @@
         .folder, .file {
             animation: fadeIn 0.5s ease-out;
         }
+
+        /* Εξασφαλίζει ότι το iframe θα έχει 100% πλάτος */
+        .iframe-container {
+            position: relative;
+            width: 100%; /* Εξασφαλίζει πλήρες πλάτος */
+            max-width: 100%; /* Εξασφαλίζει ότι δεν ξεπερνά το πλάτος της οθόνης */
+            height: 0;
+            padding-bottom: 56.25%; /* Αναλογία 16:9 (μπορείς να το αλλάξεις σε 4:3 ή άλλη αναλογία αν θέλεις) */
+            overflow: hidden;
+        }
+
+        .iframe-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;  /* Το iframe γεμίζει όλο το container */
+            height: 100%; /* Το ύψος είναι 100% του container */
+            border: none;
+        }
+
+        /* Μικρές οθόνες (π.χ. κινητά): Μειώνουμε το padding-bottom για να εξασφαλίσουμε σωστή αναλογία */
+        @media (max-width: 768px) {
+            .iframe-container {
+                padding-bottom: 75%; /* Αναλογία 4:3 για μικρότερες οθόνες */
+            }
+        }
+
+        /* Πολύ μικρές οθόνες (π.χ. κινητά) */
+        @media (max-width: 480px) {
+            .iframe-container {
+                padding-bottom: 100%; /* 1:1 αναλογία για κινητά (στρογγυλεμένο πλαίσιο) */
+            }
+        }
+
+        /* Loading Animation */
+        #loading-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.9);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            transition: opacity 0.3s;
+        }
+
+        .loader {
+            border: 5px solid #f3f3f3;
+            border-top: 5px solid #1a73e8;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Progress Bar */
+        .progress-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: #f1f1f1;
+            z-index: 1000;
+        }
+
+        .progress-bar {
+            height: 4px;
+            background: #1a73e8;
+            width: 0%;
+            transition: width 0.3s;
+        }
+
+        /* Νέα στυλ για τα folders/files */
+        .folder, .file {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .folder::after, .file::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 5px;
+            height: 5px;
+            background: rgba(26, 115, 232, 0.3);
+            opacity: 0;
+            border-radius: 100%;
+            transform: scale(1, 1) translate(-50%);
+            transform-origin: 50% 50%;
+        }
+
+        .folder:active::after, .file:active::after {
+            opacity: 1;
+            animation: ripple 0.4s ease-out;
+        }
+
+        @keyframes ripple {
+            0% { transform: scale(0, 0); opacity: 1; }
+            20% { transform: scale(25, 25); opacity: 0.8; }
+            100% { transform: scale(50, 50); opacity: 0; }
+        }
+
+        /* Tooltip styles */
+        .tooltip {
+            position: relative;
+        }
+
+        .tooltip:hover::before {
+            content: attr(data-tooltip);
+            position: absolute;
+            bottom: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            padding: 5px 10px;
+            background: rgba(0, 0, 0, 0.8);
+            color: white;
+            border-radius: 4px;
+            font-size: 14px;
+            white-space: nowrap;
+            z-index: 1000;
+        }
+
+        /* Search Styles */
+        .search-container {
+            margin: 20px 0;
+            position: relative;
+            width: 100%;
+        }
+
+        .search-wrapper {
+            position: relative;
+            width: 100%;
+            background: #fff;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            display: flex;
+            align-items: center;
+            padding: 0 15px;
+            transition: all 0.3s ease;
+        }
+
+        .search-wrapper:focus-within {
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+            transform: translateY(-1px);
+        }
+
+        .search-icon {
+            color: #5f6368;
+            margin-right: 10px;
+        }
+
+        #search-input {
+            flex: 1;
+            border: none;
+            padding: 15px 0;
+            font-size: 16px;
+            color: #202124;
+            outline: none;
+            background: transparent;
+        }
+
+        .clear-search {
+            color: #5f6368;
+            cursor: pointer;
+            padding: 5px;
+            transition: color 0.2s;
+        }
+
+        .clear-search:hover {
+            color: #202124;
+        }
+
+        .search-results {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            right: 0;
+            background: #fff;
+            border-radius: 8px;
+            margin-top: 5px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            max-height: 400px;
+            overflow-y: auto;
+            z-index: 1000;
+        }
+
+        .search-result-item {
+            padding: 12px 15px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            transition: background-color 0.2s;
+        }
+
+        .search-result-item:hover {
+            background-color: #f8f9fa;
+        }
+
+        .search-result-item i {
+            margin-right: 10px;
+            color: #1a73e8;
+        }
+
+        .search-result-info {
+            flex: 1;
+        }
+
+        .result-name {
+            font-weight: 500;
+            color: #202124;
+            margin-bottom: 3px;
+        }
+
+        .result-path {
+            font-size: 12px;
+            color: #5f6368;
+        }
+
+        .highlight {
+            background-color: #e8f0fe;
+            padding: 0 2px;
+            border-radius: 2px;
+        }
+
+        /* Scrollbar styling για τα αποτελέσματα */
+        .search-results::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .search-results::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 4px;
+        }
+
+        .search-results::-webkit-scrollbar-thumb {
+            background: #c1c1c1;
+            border-radius: 4px;
+        }
+
+        .search-results::-webkit-scrollbar-thumb:hover {
+            background: #a8a8a8;
+        }
+
+        /* No results message */
+        .no-results {
+            padding: 20px;
+            text-align: center;
+            color: #5f6368;
+            font-style: italic;
+        }
     </style>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 <body>
+    <div id="loading-overlay">
+        <div class="loader"></div>
+    </div>
+
     <div class="container">
         <!-- Header -->
         <div class="header">
@@ -115,6 +379,28 @@
             <div class="title">Επόμενο μάθημα:</div>
             <div class="date" id="next-lesson-date">Δευτέρα 03 Φεβρουαρίου</div>
             <div class="time" id="next-lesson-time">17:00</div>
+        </div>
+
+        <!-- Αντικατάσταση του υπάρχοντος search container -->
+        <div class="search-container">
+            <div class="search-wrapper">
+                <i class="fas fa-search search-icon"></i>
+                <input type="text" 
+                       id="search-input" 
+                       placeholder="Αναζήτηση αρχείων..."
+                       autocomplete="off">
+                <i class="fas fa-times clear-search" id="clear-search" style="display: none;"></i>
+            </div>
+            <div id="search-results" class="search-results" style="display: none;">
+                <!-- Τα αποτελέσματα θα προστεθούν δυναμικά εδώ -->
+            </div>
+        </div>
+
+        <div class="recently-viewed">
+            <h2>Πρόσφατα αρχεία</h2>
+            <div id="recent-files-list">
+                <!-- Populated by JavaScript -->
+            </div>
         </div>
 
         <!-- Φάκελοι και αρχεία -->
@@ -335,30 +621,80 @@
                 </div>
             </div>
         </div>
+
+
+        <div class="folder" onclick="toggleFolder('quiz')">
+            <i class="fas fa-folder"></i>
+            <div class="name">Quiz</div>
+        </div>
+        <div id="quiz-files" style="display: none; margin-left: 20px;">
+            <!-- Κουμπί για άνοιγμα του quiz -->
+            <div class="file" onclick="openForm()">
+                <i class="fas fa-file-pdf"></i>
+                <div class="name">Quiz 1</div>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="progress-container">
+        <div class="progress-bar" id="progress-bar"></div>
     </div>
 
     <script>
+        // Προσθήκη στην αρχή του script
+        // Backup timeout σε περίπτωση που κολλήσει το loading
+        setTimeout(() => {
+            const loadingOverlay = document.getElementById('loading-overlay');
+            if (loadingOverlay && loadingOverlay.style.display !== 'none') {
+                loadingOverlay.style.opacity = '0';
+                setTimeout(() => {
+                    loadingOverlay.style.display = 'none';
+                }, 300);
+            }
+        }, 3000); // Θα αφαιρέσει το loading μετά από 3 δευτερόλεπτα ακόμα κι αν κάτι πάει στραβά
+
+        document.addEventListener('DOMContentLoaded', function() {
+            const loadingOverlay = document.getElementById('loading-overlay');
+            if (loadingOverlay) {
+                loadingOverlay.style.opacity = '0';
+                setTimeout(() => {
+                    loadingOverlay.style.display = 'none';
+                }, 300);
+            }
+        });
+
         // Συνάρτηση για εμφάνιση/απόκρυψη υποφακέλων
         function toggleFolder(folderId) {
-            if (folderId === 'school-book') {
-                const subfolder = document.getElementById('school-book-files');
-                subfolder.style.display = subfolder.style.display === 'none' ? 'block' : 'none';
-             } else if (folderId === 'additional-material') {
-                const subfolder = document.getElementById('additional-material-files');
-                subfolder.style.display = subfolder.style.display === 'none' ? 'block' : 'none';
-            } else if (folderId === 'comprehension-questions') {
-                const subfolder = document.getElementById('comprehension-questions-files');
-                subfolder.style.display = subfolder.style.display === 'none' ? 'block' : 'none';
-            } else if (folderId === 'exercises') {
-                const subfolder = document.getElementById('exercises-subfolder');
-                subfolder.style.display = subfolder.style.display === 'none' ? 'block' : 'none';
-            } else if (folderId === 'exercise-correction') {
-                const file = document.getElementById('exercise-correction-file');
-                file.style.display = file.style.display === 'none' ? 'block' : 'none';
-            }
+        if (folderId === 'school-book') {
+            const subfolder = document.getElementById('school-book-files');
+            subfolder.style.display = subfolder.style.display === 'none' ? 'block' : 'none';
+        } else if (folderId === 'additional-material') {
+            const subfolder = document.getElementById('additional-material-files');
+            subfolder.style.display = subfolder.style.display === 'none' ? 'block' : 'none';
+        } else if (folderId === 'comprehension-questions') {
+            const subfolder = document.getElementById('comprehension-questions-files');
+            subfolder.style.display = subfolder.style.display === 'none' ? 'block' : 'none';
+        } else if (folderId === 'exercises') {
+            const subfolder = document.getElementById('exercises-subfolder');
+            subfolder.style.display = subfolder.style.display === 'none' ? 'block' : 'none';
+        } else if (folderId === 'exercise-correction') {
+            const file = document.getElementById('exercise-correction-file');
+            file.style.display = file.style.display === 'none' ? 'block' : 'none';
+        } else if (folderId === 'quiz') {
+            const file = document.getElementById('quiz-files');
+            file.style.display = file.style.display === 'none' ? 'block' : 'none';
+        }
         }
 
-        // Συνάρτηση για άνοιγμα αρχείου σε νέο παράθυρο
+        // Συνάρτηση για άνοιγμα του quiz
+        function openForm() {
+            // Εμφανίζουμε το iframe με το quiz
+            const iframeContainer = document.getElementById('iframe-container');
+            iframeContainer.style.display = 'block';
+        }
+
+        // Συνάρτηση για το άνοιγμα αρχείων σε νέο παράθυρο
         function openFile(filePath) {
             window.open(filePath, '_blank');
         }
@@ -395,7 +731,238 @@
             .catch(() => {
                 window.location.href = 'coming_soon.html'; // Αν υπάρξει κάποιο σφάλμα, πήγαινε στη coming_soon.html
             });
-}
+        }
+
+        // Ενημερωμένη δομή δεδομένων για τα αρχεία
+        const fileStructure = {
+            'Σχολικό βιβλίο': {
+                'Ε1 Εισαγωγή στη λογική': 'materials/0_E1.pdf',
+                'Ε2 Εισαγωγή στα σύνολα': 'materials/0_E2.pdf',
+                '2.1 Οι πραγματικοί αριθμοί': 'materials/2_1.pdf',
+                '2.2 Διάταξη πραγματικών αριθμών': 'materials/2_2.pdf',
+                '2.3 Απόλυτη τιμή πραγματικού αριθμού': 'materials/2_3.pdf',
+                '2.4 Ρίζες πραγματικών αριθμών': 'materials/2_4.pdf',
+                '3.1 Εξισώσεις 1ου βαθμού': 'materials/3_1.pdf',
+                '3.2 Η Εξίσωση xν = α': 'materials/3_2.pdf',
+                '3.3 Εξισώσεις 2ου Βαθμού': 'materials/3_3.pdf',
+                '4.1 Ανισώσεις 1ου Βαθμού': 'materials/4_1.pdf',
+                '4.2 Ανισώσεις 2ου Βαθμού': 'materials/4_2.pdf',
+                '5.1 Ακολουθίες': 'materials/5_1.pdf',
+                '5.2 Αριθμητική πρόοδος': 'materials/5_2.pdf',
+                '5.3 Γεωμετρική πρόοδος': 'materials/5_3.pdf',
+                '6.1 Η Έννοια της Συνάρτησης': 'materials/6_1.pdf',
+                '6.2 Γραφική Παράσταση Συνάρτησης': 'materials/6_2.pdf',
+                '6.3 Η Συνάρτηση f(x) = αx + β': 'materials/6_3.pdf'
+            },
+            'Ερωτήσεις κατανόησης σχολικού': {
+                'Κεφάλαιο 2': 'materials/2_revision.pdf',
+                'Κεφάλαιο 3': 'materials/3_revision.pdf',
+                'Κεφάλαιο 4': 'materials/4_revision.pdf',
+                'Κεφάλαιο 5': 'materials/5_revision.pdf',
+                'Κεφάλαιο 6': 'materials/6_revision.pdf'
+            },
+            'Συμπληρωματικό υλικό': {
+                '2.1 Οι πραγματικοί αριθμοί': 'materials/my2_1.pdf',
+                '2.2 Διάταξη πραγματικών αριθμών': 'materials/my2_2.pdf',
+                '2.3 Απόλυτη τιμή πραγματικού αριθμού': 'materials/my2_3.pdf',
+                '2.4 Ρίζες πραγματικών αριθμών': 'materials/my2_4.pdf',
+                '3.1 Εξισώσεις 1ου βαθμού': 'materials/my3_1.pdf',
+                '3.2 Η Εξίσωση xν = α': 'materials/my3_2.pdf',
+                '3.3 Εξισώσεις 2ου βαθμού': 'materials/my3_3.pdf',
+                '4.1 Ανισώσεις 1ου βαθμού': 'materials/my4_1.pdf',
+                '4.2 Ανισώσεις 2ου βαθμού': 'materials/my4_2.pdf',
+                '5.1 Ακολουθίες': 'materials/my5_1.pdf',
+                '5.2 Αριθμητική πρόοδος': 'materials/my5_2.pdf',
+                '5.3 Γεωμετρική πρόοδος': 'materials/my5_3.pdf',
+                '6.1 Η Έννοια της Συνάρτησης': 'materials/my6_1.pdf',
+                '6.2 Γραφική Παράσταση Συνάρτησης': 'materials/my6_2.pdf',
+                '6.3 Η Συνάρτηση f(x) = αx + β': 'materials/my6_3.pdf'
+            },
+            'Ασκήσεις': {
+                'Ε1 Λογική': 'materials/ex0_1.pdf',
+                'Ε2 Σύνολα': 'materials/ex0_2.pdf',
+                '2.1 Δυνάμεις, λόγοι, αναλογίες': 'materials/ex2_1_a.pdf',
+                '2.1 Αποδείξεις': 'materials/ex2_1_b.pdf',
+                '2.1 Υπολογισμός τιμής παράστασης': 'materials/ex2_1_c.pdf',
+                '2.1 - Κλειστού τύπου': 'materials/ex2_1_closed.pdf',
+                '2.1 - Συνδυαστικά θέματα': 'materials/ex2_1_total.pdf'
+            }
+        };
+
+        // Βοηθητική συνάρτηση για αφαίρεση τόνων και μετατροπή σε πεζά
+        function normalizeText(text) {
+            return text.normalize('NFD')
+                      .replace(/[\u0300-\u036f]/g, '')
+                      .toLowerCase()
+                      .replace(/[άαΑ]/g, 'α')
+                      .replace(/[έεΕ]/g, 'ε')
+                      .replace(/[ήηΗ]/g, 'η')
+                      .replace(/[ίιΙ]/g, 'ι')
+                      .replace(/[όοΟ]/g, 'ο')
+                      .replace(/[ύυΥ]/g, 'υ')
+                      .replace(/[ώωΩ]/g, 'ω');
+        }
+
+        function findMatches(searchTerm) {
+            const normalizedSearchTerm = normalizeText(searchTerm);
+            const matches = [];
+            
+            for (const [folder, files] of Object.entries(fileStructure)) {
+                for (const [fileName, filePath] of Object.entries(files)) {
+                    const normalizedFileName = normalizeText(fileName);
+                    if (normalizedFileName.includes(normalizedSearchTerm)) {
+                        matches.push({
+                            name: fileName,
+                            path: filePath,
+                            folder: folder,
+                            relevance: normalizedFileName.indexOf(normalizedSearchTerm)
+                        });
+                    }
+                }
+            }
+            
+            // Ταξινόμηση αποτελεσμάτων με βάση τη σχετικότητα
+            matches.sort((a, b) => a.relevance - b.relevance);
+            
+            return matches;
+        }
+
+        function displayResults(matches, searchTerm) {
+            const searchResults = document.getElementById('search-results');
+            searchResults.style.display = 'block';
+            
+            if (matches.length === 0) {
+                searchResults.innerHTML = `
+                    <div class="no-results">
+                        Δεν βρέθηκαν αποτελέσματα για "${searchTerm}"
+                    </div>
+                `;
+                return;
+            }
+            
+            searchResults.innerHTML = matches.map(match => `
+                <div class="search-result-item" onclick="openFile('${match.path}')">
+                    <i class="fas fa-file-pdf"></i>
+                    <div class="search-result-info">
+                        <div class="result-name">
+                            ${highlightMatch(match.name, searchTerm)}
+                        </div>
+                        <div class="result-path">
+                            ${match.folder}
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function highlightMatch(text, searchTerm) {
+            // Δημιουργία regex pattern που ταιριάζει με το κείμενο αναζήτησης
+            // ανεξάρτητα από τόνους και πεζά/κεφαλαία
+            const pattern = searchTerm.split('').map(char => {
+                const normalized = normalizeText(char);
+                return `[${normalized}${char}]`;
+            }).join('');
+            const regex = new RegExp(`(${pattern})`, 'gi');
+            
+            return text.replace(regex, '<span class="highlight">$1</span>');
+        }
+
+        // Αρχικοποίηση αναζήτησης
+        document.addEventListener('DOMContentLoaded', function() {
+            const searchInput = document.getElementById('search-input');
+            const searchResults = document.getElementById('search-results');
+            const clearSearch = document.getElementById('clear-search');
+            
+            // Event listeners
+            searchInput.addEventListener('input', handleSearch);
+            clearSearch.addEventListener('click', clearSearchInput);
+            
+            // Click outside to close results
+            document.addEventListener('click', function(e) {
+                if (!e.target.closest('.search-container')) {
+                    searchResults.style.display = 'none';
+                }
+            });
+        });
+
+        function handleSearch(e) {
+            const searchTerm = e.target.value.toLowerCase();
+            const searchResults = document.getElementById('search-results');
+            const clearButton = document.getElementById('clear-search');
+            
+            // Show/hide clear button
+            clearButton.style.display = searchTerm ? 'block' : 'none';
+            
+            if (!searchTerm) {
+                searchResults.style.display = 'none';
+                return;
+            }
+
+            // Find matches
+            const matches = findMatches(searchTerm);
+            
+            // Display results
+            displayResults(matches, searchTerm);
+        }
+
+        function clearSearchInput() {
+            const searchInput = document.getElementById('search-input');
+            const searchResults = document.getElementById('search-results');
+            const clearButton = document.getElementById('clear-search');
+            
+            searchInput.value = '';
+            searchResults.style.display = 'none';
+            clearButton.style.display = 'none';
+            searchInput.focus();
+        }
+
+        // Keyboard navigation για τα αποτελέσματα
+        document.addEventListener('keydown', function(e) {
+            const searchResults = document.getElementById('search-results');
+            if (searchResults.style.display === 'none') return;
+            
+            const results = searchResults.querySelectorAll('.search-result-item');
+            const current = searchResults.querySelector('.search-result-item.selected');
+            
+            switch(e.key) {
+                case 'ArrowDown':
+                    e.preventDefault();
+                    if (!current) {
+                        results[0]?.classList.add('selected');
+                    } else {
+                        const next = current.nextElementSibling;
+                        if (next) {
+                            current.classList.remove('selected');
+                            next.classList.add('selected');
+                            next.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+                        }
+                    }
+                    break;
+                    
+                case 'ArrowUp':
+                    e.preventDefault();
+                    if (current) {
+                        const prev = current.previousElementSibling;
+                        if (prev) {
+                            current.classList.remove('selected');
+                            prev.classList.add('selected');
+                            prev.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+                        }
+                    }
+                    break;
+                    
+                case 'Enter':
+                    if (current) {
+                        const path = current.getAttribute('onclick').match(/'([^']+)'/)[1];
+                        openFile(path);
+                    }
+                    break;
+                    
+                case 'Escape':
+                    searchResults.style.display = 'none';
+                    break;
+            }
+        });
     </script>
 </body>
 </html>
