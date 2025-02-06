@@ -236,6 +236,10 @@
             margin: 20px 0;
             position: relative;
             width: 100%;
+            max-width: 800px; /* Match container max-width */
+            margin-left: auto;
+            margin-right: auto;
+            z-index: 1000;
         }
 
         .search-wrapper {
@@ -248,6 +252,7 @@
             align-items: center;
             padding: 0 15px;
             transition: all 0.3s ease;
+            box-sizing: border-box; /* Ensure padding is included in width */
         }
 
         .search-wrapper:focus-within {
@@ -282,17 +287,28 @@
         }
 
         .search-results {
-            position: absolute;
-            top: 100%;
+            position: absolute; /* Change from fixed to absolute */
+            top: 100%; /* Position right below the search box */
             left: 0;
             right: 0;
+            max-height: 60vh;
             background: #fff;
             border-radius: 8px;
             margin-top: 5px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            max-height: 400px;
             overflow-y: auto;
             z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(-10px);
+            transition: all 0.3s ease;
+        }
+
+        /* Show search results */
+        .search-results.show {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
         }
 
         .search-result-item {
@@ -358,6 +374,17 @@
             text-align: center;
             color: #5f6368;
             font-style: italic;
+        }
+
+        /* Mobile-specific adjustments */
+        @media (max-width: 768px) {
+            .search-results {
+                max-height: 50vh;
+            }
+            
+            .search-wrapper {
+                padding: 0 10px; /* Smaller padding in search input */
+            }
         }
     </style>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
@@ -743,7 +770,7 @@
                 '2.3 Απόλυτη τιμή πραγματικού αριθμού': 'materials/2_3.pdf',
                 '2.4 Ρίζες πραγματικών αριθμών': 'materials/2_4.pdf',
                 '3.1 Εξισώσεις 1ου βαθμού': 'materials/3_1.pdf',
-                '3.2 Η Εξίσωση xν = α': 'materials/3_2.pdf',
+                '3.2 Η Εξίσωση x<sup>v</sup> = α': 'materials/3_2.pdf',
                 '3.3 Εξισώσεις 2ου Βαθμού': 'materials/3_3.pdf',
                 '4.1 Ανισώσεις 1ου Βαθμού': 'materials/4_1.pdf',
                 '4.2 Ανισώσεις 2ου Βαθμού': 'materials/4_2.pdf',
@@ -752,7 +779,7 @@
                 '5.3 Γεωμετρική πρόοδος': 'materials/5_3.pdf',
                 '6.1 Η Έννοια της Συνάρτησης': 'materials/6_1.pdf',
                 '6.2 Γραφική Παράσταση Συνάρτησης': 'materials/6_2.pdf',
-                '6.3 Η Συνάρτηση f(x) = αx + β': 'materials/6_3.pdf'
+                '6.3 Η Συνάρτηση f(x) = &alpha;x + &beta;': 'materials/6_3.pdf'
             },
             'Ερωτήσεις κατανόησης σχολικού': {
                 'Κεφάλαιο 2': 'materials/2_revision.pdf',
@@ -767,7 +794,7 @@
                 '2.3 Απόλυτη τιμή πραγματικού αριθμού': 'materials/my2_3.pdf',
                 '2.4 Ρίζες πραγματικών αριθμών': 'materials/my2_4.pdf',
                 '3.1 Εξισώσεις 1ου βαθμού': 'materials/my3_1.pdf',
-                '3.2 Η Εξίσωση xν = α': 'materials/my3_2.pdf',
+                '3.2 Η Εξίσωση x<sup>v</sup> = α': 'materials/my3_2.pdf',
                 '3.3 Εξισώσεις 2ου βαθμού': 'materials/my3_3.pdf',
                 '4.1 Ανισώσεις 1ου βαθμού': 'materials/my4_1.pdf',
                 '4.2 Ανισώσεις 2ου βαθμού': 'materials/my4_2.pdf',
@@ -776,7 +803,7 @@
                 '5.3 Γεωμετρική πρόοδος': 'materials/my5_3.pdf',
                 '6.1 Η Έννοια της Συνάρτησης': 'materials/my6_1.pdf',
                 '6.2 Γραφική Παράσταση Συνάρτησης': 'materials/my6_2.pdf',
-                '6.3 Η Συνάρτηση f(x) = αx + β': 'materials/my6_3.pdf'
+                '6.3 Η Συνάρτηση f(x) = &alpha;x + &beta;': 'materials/my6_3.pdf'
             },
             'Ασκήσεις': {
                 'Ε1 Λογική': 'materials/ex0_1.pdf',
@@ -895,6 +922,7 @@
             
             if (!searchTerm) {
                 searchResults.style.display = 'none';
+                searchResults.classList.remove('show');
                 return;
             }
 
@@ -902,6 +930,11 @@
             const matches = findMatches(searchTerm);
             
             // Display results
+            searchResults.style.display = 'block';
+            // Add small delay to ensure display:block is applied before animation
+            setTimeout(() => {
+                searchResults.classList.add('show');
+            }, 10);
             displayResults(matches, searchTerm);
         }
 
@@ -911,7 +944,10 @@
             const clearButton = document.getElementById('clear-search');
             
             searchInput.value = '';
-            searchResults.style.display = 'none';
+            searchResults.classList.remove('show');
+            setTimeout(() => {
+                searchResults.style.display = 'none';
+            }, 300); // Match transition duration
             clearButton.style.display = 'none';
             searchInput.focus();
         }
