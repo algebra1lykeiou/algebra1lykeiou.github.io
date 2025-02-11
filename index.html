@@ -63,7 +63,7 @@
         .folder, .file {
             background-color: #fff;
             border-radius: 8px;
-            padding: 15px;
+            padding: 25px;
             margin-bottom: 10px;
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
             display: flex;
@@ -392,6 +392,24 @@
                 padding: 0 10px; /* Smaller padding in search input */
             }
         }
+
+        .trapeza-thematon {
+            background-color: rgba(220, 53, 69, 0.1); /* Lighter red background */
+            border-color: #dc3545;
+        }
+
+        .trapeza-thematon:hover {
+            background-color: rgba(220, 53, 69, 0.15); /* Slightly darker on hover */
+            border-color: #dc3545;
+        }
+
+        .trapeza-thematon i {
+            color: #dc3545;
+        }
+
+        .trapeza-thematon .name {
+            color: var(--text-primary);
+        }
     </style>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
@@ -694,6 +712,11 @@
                 <i class="fas fa-file-pdf"></i>
                 <a href="https://docs.google.com/forms/d/e/1FAIpQLSdHnt-V4Wpwphas_pAZjBh0eYxTh9AlIYHNwb_1XpxT7CGSlQ/viewform?usp=sharing" class="name">Δοκιμαστικό</a>
             </div>
+        </div>
+
+        <div class="folder trapeza-thematon" onclick="window.open('https://www.trapeza-thematon.gr/Mathima/5', '_blank')">
+            <i class="fas fa-book"></i>
+            <div class="name">Τράπεζα θεμάτων</div>
         </div>
 
     </div>
