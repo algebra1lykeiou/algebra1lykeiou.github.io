@@ -745,6 +745,19 @@
             </div>
         </div>
 
+        
+        <!-- Αποδείξεις -->
+        <div class="folder" onclick="toggleFolder('proofs')">
+            <i class="fas fa-folder"></i>
+            <div class="name">Αποδείξεις</div>
+        </div>
+        <div id="proofs-files" style="display: none; margin-left: 20px;">
+            <div class="file" onclick="openFile('materials/proof1.pdf')">
+                <i class="fas fa-file-pdf"></i>
+                <div class="name">Αποδείξεις 1</div>
+            </div>
+        </div>
+
 
         <div class="folder" onclick="toggleFolder('quiz')">
             <i class="fas fa-folder"></i>
@@ -794,25 +807,28 @@
 
         // Συνάρτηση για εμφάνιση/απόκρυψη υποφακέλων
         function toggleFolder(folderId) {
-        if (folderId === 'school-book') {
-            const subfolder = document.getElementById('school-book-files');
-            subfolder.style.display = subfolder.style.display === 'none' ? 'block' : 'none';
-        } else if (folderId === 'additional-material') {
-            const subfolder = document.getElementById('additional-material-files');
-            subfolder.style.display = subfolder.style.display === 'none' ? 'block' : 'none';
-        } else if (folderId === 'comprehension-questions') {
-            const subfolder = document.getElementById('comprehension-questions-files');
-            subfolder.style.display = subfolder.style.display === 'none' ? 'block' : 'none';
-        } else if (folderId === 'exercises') {
-            const subfolder = document.getElementById('exercises-subfolder');
-            subfolder.style.display = subfolder.style.display === 'none' ? 'block' : 'none';
-        } else if (folderId === 'exercise-correction') {
-            const file = document.getElementById('exercise-correction-file');
-            file.style.display = file.style.display === 'none' ? 'block' : 'none';
-        } else if (folderId === 'quiz') {
-            const file = document.getElementById('quiz-files');
-            file.style.display = file.style.display === 'none' ? 'block' : 'none';
-        }
+            if (folderId === 'school-book') {
+                const subfolder = document.getElementById('school-book-files');
+                subfolder.style.display = subfolder.style.display === 'none' ? 'block' : 'none';
+            } else if (folderId === 'additional-material') {
+                const subfolder = document.getElementById('additional-material-files');
+                subfolder.style.display = subfolder.style.display === 'none' ? 'block' : 'none';
+            } else if (folderId === 'comprehension-questions') {
+                const subfolder = document.getElementById('comprehension-questions-files');
+                subfolder.style.display = subfolder.style.display === 'none' ? 'block' : 'none';
+            } else if (folderId === 'exercises') {
+                const subfolder = document.getElementById('exercises-subfolder');
+                subfolder.style.display = subfolder.style.display === 'none' ? 'block' : 'none';
+            } else if (folderId === 'exercise-correction') {
+                const file = document.getElementById('exercise-correction-file');
+                file.style.display = file.style.display === 'none' ? 'block' : 'none';
+            } else if (folderId === 'proofs') {
+                const subfolder = document.getElementById('proofs-files');
+                subfolder.style.display = subfolder.style.display === 'none' ? 'block' : 'none';
+            } else if (folderId === 'quiz') {
+                const file = document.getElementById('quiz-files');
+                file.style.display = file.style.display === 'none' ? 'block' : 'none';
+            }
         }
 
         // Συνάρτηση για άνοιγμα του quiz
