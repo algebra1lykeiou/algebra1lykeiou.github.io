@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="el">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Algebra BG - Learn Math Easily</title>
+    <title>Άλγεβρα Α' Λυκείου</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
@@ -30,7 +30,6 @@
             min-height: 100vh;
             display: flex;
             flex-direction: column;
-            overflow-x: hidden;
         }
         
         header {
@@ -71,45 +70,32 @@
         .hero {
             padding: 8rem 1rem 4rem;
             text-align: center;
-            position: relative;
-            overflow: hidden;
         }
         
         .hero-content {
             max-width: 600px;
             margin: 0 auto;
-            position: relative;
-            z-index: 2;
         }
         
         h1 {
-            font-size: 2.5rem;
-            margin-bottom: 1rem;
-            background: linear-gradient(to right, var(--primary), var(--secondary));
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
+            font-size: 2rem;
+            margin-bottom: 1.5rem;
+            color: var(--primary);
         }
         
         .subtitle {
-            font-size: 1.2rem;
+            font-size: 1.1rem;
             color: #555;
             margin-bottom: 2rem;
-            font-weight: 300;
+            line-height: 1.6;
         }
         
         .app-image {
             width: 100%;
-            max-width: 300px;
+            max-width: 200px;
             margin: 2rem auto;
             border-radius: 20px;
             box-shadow: 0 15px 30px rgba(0,0,0,0.1);
-            transform: perspective(1000px) rotateY(-5deg);
-            transition: transform 0.3s ease;
-        }
-        
-        .app-image:hover {
-            transform: perspective(1000px) rotateY(0deg);
         }
         
         .download-btn {
@@ -117,11 +103,11 @@
             align-items: center;
             background: linear-gradient(to right, var(--primary), var(--secondary));
             color: white;
-            padding: 1rem 2rem;
+            padding: 0.8rem 1.5rem;
             border-radius: 50px;
             text-decoration: none;
             font-weight: 600;
-            font-size: 1.1rem;
+            font-size: 1rem;
             box-shadow: 0 5px 15px rgba(67, 97, 238, 0.4);
             transition: all 0.3s ease;
             margin: 1rem 0;
@@ -134,42 +120,36 @@
         
         .download-btn i {
             margin-right: 0.5rem;
-            font-size: 1.3rem;
         }
         
         .features {
-            padding: 4rem 1rem;
+            padding: 3rem 1rem;
             background: white;
         }
         
         .features-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 2rem;
-            margin-top: 2rem;
+            gap: 1.5rem;
+            margin-top: 1.5rem;
         }
         
         .feature-card {
             background: var(--light);
-            padding: 2rem;
+            padding: 1.5rem;
             border-radius: 10px;
             text-align: center;
-            transition: transform 0.3s ease;
             box-shadow: 0 5px 15px rgba(0,0,0,0.05);
         }
         
-        .feature-card:hover {
-            transform: translateY(-10px);
-        }
-        
         .feature-icon {
-            font-size: 2.5rem;
+            font-size: 2rem;
             color: var(--primary);
             margin-bottom: 1rem;
         }
         
         .feature-title {
-            font-size: 1.2rem;
+            font-size: 1.1rem;
             margin-bottom: 0.5rem;
             color: var(--dark);
         }
@@ -177,6 +157,7 @@
         .feature-desc {
             color: #666;
             font-size: 0.9rem;
+            line-height: 1.5;
         }
         
         footer {
@@ -190,63 +171,25 @@
         .footer-links {
             display: flex;
             justify-content: center;
-            gap: 2rem;
+            gap: 1.5rem;
             margin: 1rem 0;
         }
         
         .footer-link {
             color: white;
             text-decoration: none;
-            transition: color 0.3s ease;
+            font-size: 0.9rem;
         }
         
-        .footer-link:hover {
-            color: var(--accent);
-        }
-        
-        .social-links {
-            display: flex;
-            justify-content: center;
-            gap: 1rem;
-            margin: 1rem 0;
-        }
-        
-        .social-link {
-            color: white;
-            font-size: 1.5rem;
-            transition: color 0.3s ease;
-        }
-        
-        .social-link:hover {
-            color: var(--accent);
-        }
-        
-        .math-shapes {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            top: 0;
-            left: 0;
-            z-index: 1;
-            opacity: 0.1;
-            overflow: hidden;
-        }
-        
-        .shape {
-            position: absolute;
-            font-size: 3rem;
-            color: var(--primary);
-            animation: float 15s infinite linear;
-        }
-        
-        @keyframes float {
-            0% { transform: translateY(0) rotate(0deg); }
-            100% { transform: translateY(-100vh) rotate(360deg); }
+        .copyright {
+            font-size: 0.8rem;
+            opacity: 0.7;
+            margin-top: 1rem;
         }
         
         @media (max-width: 768px) {
             h1 {
-                font-size: 2rem;
+                font-size: 1.8rem;
             }
             
             .subtitle {
@@ -265,24 +208,27 @@
             <nav class="navbar">
                 <a href="#" class="logo">
                     <i class="fas fa-square-root-alt"></i>
-                    Algebra BG
+                    Άλγεβρα Α' Λυκείου
                 </a>
             </nav>
         </div>
     </header>
     
     <section class="hero">
-        <div class="math-shapes" id="mathShapes"></div>
         <div class="container">
             <div class="hero-content">
-                <h1>Master Algebra with Our App</h1>
-                <p class="subtitle">The ultimate tool for Bulgarian students to learn algebra easily and effectively</p>
+                <h1>Εφαρμογή Άλγεβρας Α' Λυκείου</h1>
+                <p class="subtitle">
+                    Πρόκειται για εφαρμογή αλγεβρας Α' Λυκείου και περιέχει σχολικό βιβλίο, 
+                    ασκήσεις, ερωτήσεις κατανόησης, quiz και συμπληρωματικό υλικό για την 
+                    καλύτερη μάθηση των μαθηματικών.
+                </p>
                 
-                <img src="https://algebra1lykeiou.github.io/materials/app_icon.png" alt="Algebra BG App Screenshot" class="app-image">
+                <img src="https://algebra1lykeiou.github.io/materials/app_icon.png" alt="Εφαρμογή Άλγεβρας" class="app-image">
                 
                 <a href="https://algebra1lykeiou.github.io/materials/algebrabg.apk" class="download-btn">
                     <i class="fas fa-download"></i>
-                    Download Now
+                    Λήψη Εφαρμογής
                 </a>
             </div>
         </div>
@@ -290,34 +236,31 @@
     
     <section class="features">
         <div class="container">
-            <h2 style="text-align: center; margin-bottom: 1rem;">Why Choose Algebra BG?</h2>
-            <p style="text-align: center; max-width: 600px; margin: 0 auto 2rem; color: #666;">
-                Our app is specifically designed to help Bulgarian students excel in algebra with tailored content and interactive lessons.
-            </p>
+            <h2 style="text-align: center; margin-bottom: 1rem;">Τι περιέχει η εφαρμογή;</h2>
             
             <div class="features-grid">
                 <div class="feature-card">
                     <div class="feature-icon">
-                        <i class="fas fa-book-open"></i>
+                        <i class="fas fa-book"></i>
                     </div>
-                    <h3 class="feature-title">Comprehensive Lessons</h3>
-                    <p class="feature-desc">Covering all algebra topics in the Bulgarian curriculum with clear explanations.</p>
+                    <h3 class="feature-title">Σχολικό Βιβλίο</h3>
+                    <p class="feature-desc">Ολόκληρο το σχολικό βιβλίο σε ψηφιακή μορφή για εύκολη μελέτη.</p>
                 </div>
                 
                 <div class="feature-card">
                     <div class="feature-icon">
-                        <i class="fas fa-calculator"></i>
+                        <i class="fas fa-tasks"></i>
                     </div>
-                    <h3 class="feature-title">Interactive Practice</h3>
-                    <p class="feature-desc">Solve problems with step-by-step guidance and instant feedback.</p>
+                    <h3 class="feature-title">Ασκήσεις & Ερωτήσεις</h3>
+                    <p class="feature-desc">Πολλές ασκήσεις και ερωτήσεις κατανόησης με λύσεις.</p>
                 </div>
                 
                 <div class="feature-card">
                     <div class="feature-icon">
-                        <i class="fas fa-chart-line"></i>
+                        <i class="fas fa-question-circle"></i>
                     </div>
-                    <h3 class="feature-title">Progress Tracking</h3>
-                    <p class="feature-desc">Monitor your improvement and identify areas that need more work.</p>
+                    <h3 class="feature-title">Quiz & Τεστ</h3>
+                    <p class="feature-desc">Διαδραστικά quiz για να ελέγξετε τις γνώσεις σας.</p>
                 </div>
             </div>
         </div>
@@ -327,55 +270,19 @@
         <div class="container">
             <div class="logo" style="color: white; justify-content: center; margin-bottom: 1rem;">
                 <i class="fas fa-square-root-alt"></i>
-                Algebra BG
+                Άλγεβρα Α' Λυκείου
             </div>
             
             <div class="footer-links">
-                <a href="#" class="footer-link">Privacy Policy</a>
-                <a href="#" class="footer-link">Terms of Service</a>
-                <a href="#" class="footer-link">Contact Us</a>
+                <a href="#" class="footer-link">Πολιτική Απορρήτου</a>
+                <a href="#" class="footer-link">Όροι Χρήσης</a>
+                <a href="#" class="footer-link">Επικοινωνία</a>
             </div>
             
-            <div class="social-links">
-                <a href="#" class="social-link"><i class="fab fa-facebook"></i></a>
-                <a href="#" class="social-link"><i class="fab fa-instagram"></i></a>
-                <a href="#" class="social-link"><i class="fab fa-youtube"></i></a>
-            </div>
-            
-            <p style="font-size: 0.8rem; opacity: 0.7; margin-top: 1rem;">
-                &copy; 2023 Algebra BG. All rights reserved.
+            <p class="copyright">
+                &copy; 2023 Άλγεβρα Α' Λυκείου. Με ❤️ για τα μαθηματικά.
             </p>
         </div>
     </footer>
-    
-    <script>
-        // Create floating math shapes
-        const mathShapesContainer = document.getElementById('mathShapes');
-        const mathSymbols = ['∑', '∫', '∞', '√', 'π', 'Δ', 'θ', 'α', 'β', 'γ', '=', '≠', '≈', '≤', '≥'];
-        
-        for (let i = 0; i < 15; i++) {
-            const shape = document.createElement('div');
-            shape.classList.add('shape');
-            shape.textContent = mathSymbols[Math.floor(Math.random() * mathSymbols.length)];
-            
-            // Random properties
-            const size = Math.random() * 3 + 1;
-            const posX = Math.random() * window.innerWidth;
-            const delay = Math.random() * 15;
-            const duration = 10 + Math.random() * 20;
-            
-            // Apply styles
-            shape.style.fontSize = `${size}rem`;
-            shape.style.left = `${posX}px`;
-            shape.style.animationDelay = `${delay}s`;
-            shape.style.animationDuration = `${duration}s`;
-            shape.style.opacity = Math.random() * 0.5 + 0.1;
-            
-            mathShapesContainer.appendChild(shape);
-        }
-        
-        // Replace the placeholder image URL with your actual app screenshot
-        // document.querySelector('.app-image').src = 'your-image-url.jpg';
-    </script>
 </body>
 </html>
