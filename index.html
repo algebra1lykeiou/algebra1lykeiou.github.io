@@ -500,8 +500,8 @@
         <!-- Πληροφορίες για το μάθημα -->
         <div class="info">
             <div class="title">Επόμενο μάθημα:</div>
-            <div class="date" id="next-lesson-date">Δευτέρα 03 Φεβρουαρίου</div>
-            <div class="time" id="next-lesson-time">17:00</div>
+            <div class="date" id="next-lesson-date">Φόρτωση...</div>
+            <div class="time" id="next-lesson-time">Φόρτωση...</div>
         </div>
 
         <!-- Αντικατάσταση του υπάρχοντος search container -->
@@ -887,6 +887,7 @@
     </div>
 
     <script>
+        
         // Προσθήκη στην αρχή του script
         // Backup timeout σε περίπτωση που κολλήσει το loading
         setTimeout(() => {
@@ -907,8 +908,58 @@
                     loadingOverlay.style.display = 'none';
                 }, 300);
             }
+
+            // Καλείται η συνάρτηση για να ενημερώσει την ημερομηνία και ώρα
+            updateNextLesson();
         });
 
+// Νέα συνάρτηση για ενημέρωση του επόμενου μαθήματος
+        function updateNextLesson() {
+            const now = new Date();
+            const currentDay = now.getDay(); // 0=Κυριακή, 1=Δευτέρα, ..., 6=Σάββατο
+            const currentHour = now.getHours();
+            const currentMinutes = now.getMinutes();
+            
+            // Έλεγχος για Σάββατο 11:00
+            let nextSaturday = new Date(now);
+            nextSaturday.setDate(now.getDate() + (6 - currentDay) % 7);
+            nextSaturday.setHours(11, 0, 0, 0);
+            
+            // Έλεγχος για Δευτέρα 17:00
+            let nextMonday = new Date(now);
+            nextMonday.setDate(now.getDate() + (1 + 7 - currentDay) % 7);
+            nextMonday.setHours(17, 0, 0, 0);
+            
+            // Έλεγχος αν η τρέχουσα ώρα έχει περάσει το Σάββατο 11:00
+            if (currentDay === 6 && (currentHour > 11 || (currentHour === 11 && currentMinutes >= 0)) {
+                nextSaturday.setDate(nextSaturday.getDate() + 7);
+            }
+            
+            // Έλεγχος αν η τρέχουσα ώρα έχει περάσει τη Δευτέρα 17:00
+            if (currentDay === 1 && (currentHour > 17 || (currentHour === 17 && currentMinutes >= 0))) {
+                nextMonday.setDate(nextMonday.getDate() + 7);
+            }
+            
+            // Επιλογή του πιο κοντινού μαθήματος
+            let nextLesson;
+            if (nextSaturday < nextMonday) {
+                nextLesson = nextSaturday;
+            } else {
+                nextLesson = nextMonday;
+            }
+            
+            // Μορφοποίηση ημερομηνίας
+            const options = { weekday: 'long', day: 'numeric', month: 'long' };
+            const dateStr = nextLesson.toLocaleDateString('el-GR', options);
+            
+            // Μορφοποίηση ώρας
+            const timeStr = nextLesson.getHours() + ':' + (nextLesson.getMinutes() < 10 ? '0' : '') + nextLesson.getMinutes();
+            
+            // Ενημέρωση του HTML
+            document.getElementById('next-lesson-date').textContent = dateStr;
+            document.getElementById('next-lesson-time').textContent = timeStr;
+        }
+        
         // Συνάρτηση για εμφάνιση/απόκρυψη υποφακέλων
         function toggleFolder(folderId) {
             if (folderId === 'school-book') {
