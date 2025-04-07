@@ -1,172 +1,220 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="el">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Quiz App Coming Soon</title>
+    <title>Διαγωνίσματα | Άλγεβρα Α' Λυκείου</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;600;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;500;700&display=swap" rel="stylesheet">
     <style>
+        :root {
+            --primary: #4361ee;
+            --primary-light: #e0e7ff;
+            --text: #1e293b;
+            --text-light: #64748b;
+            --background: #f8fafc;
+            --white: #ffffff;
+            --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+
+            --base-font-size: 18px;
+            --heading-font-size: 1.6rem;
+            --section-title-size: 1.2rem;
+            --card-header-size: 1.5rem;
+        }
+
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
-        
+
         body {
-            font-family: 'Poppins', sans-serif;
-            background: linear-gradient(135deg, #6e8efb, #a777e3);
-            height: 100vh;
+            font-family: 'Inter', sans-serif;
+            background: var(--background);
+            color: var(--text);
+            min-height: 100vh;
             display: flex;
-            justify-content: center;
-            align-items: center;
-            color: white;
+            flex-direction: column;
+            font-size: var(--base-font-size);
+        }
+
+        header {
+            background: var(--white);
+            padding: 1rem;
+            box-shadow: var(--shadow);
             text-align: center;
-            overflow: hidden;
         }
-        
+
+        .logo {
+            font-weight: 700;
+            color: var(--primary);
+            font-size: var(--heading-font-size);
+        }
+
         .container {
-            padding: 2rem;
-            max-width: 90%;
-            position: relative;
-            z-index: 2;
+            flex: 1;
+            max-width: 800px;
+            margin: 2rem auto;
+            padding: 0 1rem;
         }
-        
-        h1 {
-            font-size: 4rem;
-            font-weight: 800;
-            margin-bottom: 1.5rem;
-            text-shadow: 3px 3px 0 rgba(0,0,0,0.1);
-            animation: pulse 2s infinite;
-        }
-        
-        p {
-            font-size: 1.5rem;
-            font-weight: 300;
+
+        .card {
+            background: var(--white);
+            border-radius: 8px;
+            box-shadow: var(--shadow);
+            overflow: hidden;
             margin-bottom: 2rem;
-            opacity: 0.9;
         }
-        
-        .construction-icon {
-            font-size: 3rem;
+
+        .card-header {
+            background-color: var(--primary);
+            color: var(--white);
+            padding: 1rem;
+            font-size: var(--card-header-size);
+            font-weight: 500;
+        }
+
+        .card-content {
+            padding: 1.5rem;
+        }
+
+        .section {
             margin-bottom: 1.5rem;
-            animation: bounce 2s infinite;
         }
-        
-        .progress-container {
-            width: 100%;
-            height: 10px;
-            background: rgba(255,255,255,0.2);
-            border-radius: 5px;
-            margin: 2rem 0;
-            overflow: hidden;
+
+        .section-title {
+            font-weight: 500;
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+            font-size: var(--section-title-size);
         }
-        
-        .progress-bar {
-            height: 100%;
-            width: 65%;
-            background: white;
-            border-radius: 5px;
-            animation: progress 3s ease-in-out infinite;
+
+        ul {
+            list-style-type: none;
+            padding: 0;
+            margin: 0.5rem 0;
         }
-        
-        .floating-shapes {
+
+        li {
+            padding: 0.5rem 0;
+            padding-left: 1.5rem;
+            position: relative;
+            color: var(--text-light);
+        }
+
+        li:before {
+            content: "→";
             position: absolute;
-            top: 0;
             left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: 1;
-            overflow: hidden;
+            color: var(--primary);
         }
-        
-        .shape {
-            position: absolute;
-            opacity: 0.1;
-            border-radius: 50%;
-            background: white;
-            animation: float 15s infinite linear;
+
+        .btn {
+            display: block;
+            padding: 0.75rem;
+            background-color: var(--primary);
+            color: var(--white);
+            text-decoration: none;
+            border-radius: 6px;
+            text-align: center;
+            border: none;
+            cursor: pointer;
+            font-weight: 500;
+            margin-top: 1rem;
+            transition: background-color 0.2s;
+            font-size: 1rem;
         }
-        
-        @keyframes float {
-            0% { transform: translateY(0) rotate(0deg); }
-            100% { transform: translateY(-1000px) rotate(720deg); }
+
+        .btn:hover {
+            background-color: #3a56d4;
         }
-        
-        @keyframes pulse {
-            0% { transform: scale(1); }
-            50% { transform: scale(1.05); }
-            100% { transform: scale(1); }
+
+        .highlight {
+            background-color: var(--primary-light);
+            padding: 1rem;
+            border-radius: 6px;
+            margin-top: 1rem;
+            border-left: 3px solid var(--primary);
+            font-size: 1rem;
         }
-        
-        @keyframes bounce {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-15px); }
+
+        .highlight strong {
+            color: var(--primary);
         }
-        
-        @keyframes progress {
-            0% { width: 30%; }
-            50% { width: 80%; }
-            100% { width: 30%; }
+
+        footer {
+            text-align: center;
+            padding: 1rem;
+            color: var(--text-light);
+            font-size: 1rem;
         }
-        
+
         @media (max-width: 600px) {
-            h1 {
-                font-size: 3rem;
+            .container {
+                padding: 0 1rem;
             }
-            
-            p {
-                font-size: 1.2rem;
+
+            .card-content {
+                padding: 1rem;
+            }
+
+            body {
+                font-size: 20px;
+            }
+
+            .section-title {
+                font-size: 1.3rem;
+            }
+
+            .card-header {
+                font-size: 1.7rem;
+            }
+
+            .btn {
+                font-size: 1.1rem;
             }
         }
     </style>
 </head>
 <body>
-    <div class="floating-shapes">
-        <!-- These will be generated by JavaScript -->
-    </div>
-    
     <div class="container">
-        <div class="construction-icon">🚧</div>
-        <h1>QUIZ</h1>
-        <p>Under development! See you soon...</p>
-        
-        <div class="progress-container">
-            <div class="progress-bar"></div>
+        <div class="card">
+            <div class="card-header">Διαγώνισμα Απρίλιος 2025</div>
+            <div class="card-content">
+                <div class="section">
+                    <div class="section-title">Ύλη εξέτασης</div>
+                    <div>
+                        <p><strong>Θεωρία και εφαρμογές (Σχολικό βιβλίο + φυλλάδια)</strong></p>
+                        <ul>
+                            <li>Ε1 Εισαγωγή στη λογική</li>
+                            <li>2.1 Οι πραγματικοί αριθμοί</li>
+                            <li>2.2 Διάταξη πραγματικών αριθμών</li>
+                            <li>2.3 Απόλυτη τιμή πραγματικού αριθμού</li>
+                            <li>2.4 Ρίζες πραγματικών αριθμών</li>
+                            <li>3.1 Εξισώσεις 1ου βαθμού</li>
+                            <li>3.2 Η Εξίσωση x<sup>ν</sup> = α</li>
+                            <li>3.3 Εξισώσεις 2ου Βαθμού</li>
+                        </ul>
+
+                        <p><strong>Αποδείξεις</strong></p>
+                        <ul>
+                            <li>2.3 Απόλυτη τιμή πραγματικού αριθμού</li>
+                            <li>2.4 Ρίζες πραγματικών αριθμών</li>
+                        </ul>
+
+                        <div class="highlight">
+                            <strong>Προσοχή:</strong> Όλα είναι σημαντικά αλλά ιδιαίτερη έμφαση στα: Απόλυτη τιμή, Ρίζες, Διάταξη
+                        </div>
+                    </div>
+                </div>
+
+                <div class="section">
+                    <div class="section-title">Διαγώνισμα</div>
+                    <a href="https://algebra1lykeiou.github.io/materials/exams.html" class="btn">🔓 Άνοιγμα διαγωνίσματος</a>
+                </div>
+            </div>
         </div>
-        
-        <p>We're working hard to bring you an amazing experience!</p>
     </div>
-    
-    <script>
-        // Create floating shapes
-        const floatingShapes = document.querySelector('.floating-shapes');
-        const colors = ['#ffffff', '#e0f7fa', '#b2ebf2'];
-        
-        for (let i = 0; i < 15; i++) {
-            const shape = document.createElement('div');
-            shape.classList.add('shape');
-            
-            // Random properties
-            const size = Math.random() * 100 + 50;
-            const posX = Math.random() * window.innerWidth;
-            const posY = Math.random() * window.innerHeight;
-            const color = colors[Math.floor(Math.random() * colors.length)];
-            const delay = Math.random() * 15;
-            const duration = 10 + Math.random() * 20;
-            
-            // Apply styles
-            shape.style.width = `${size}px`;
-            shape.style.height = `${size}px`;
-            shape.style.left = `${posX}px`;
-            shape.style.top = `${posY}px`;
-            shape.style.background = color;
-            shape.style.animationDelay = `${delay}s`;
-            shape.style.animationDuration = `${duration}s`;
-            
-            floatingShapes.appendChild(shape);
-        }
-    </script>
 </body>
 </html>
